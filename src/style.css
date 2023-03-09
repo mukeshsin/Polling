@@ -33,7 +33,7 @@ input {
   color: gray;
   box-sizing: border-box;
   margin-left: 1%;
-  border: 1px solid #BEC2C4;
+  border: 1px solid #bec2c4;
   padding-left: 10px;
 }
 .formCheck {
@@ -61,7 +61,7 @@ input {
   margin-bottom: 30px;
   height: 40px;
   border-radius: 15px;
-  background-color: #6EA4E6;
+  background-color: #6ea4e6;
   color: white;
   font-size: 18px;
   border: none;
@@ -161,15 +161,3 @@ input {
     margin-right: 0;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-

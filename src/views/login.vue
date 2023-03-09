@@ -19,7 +19,7 @@
 import axios from "axios";
 import router from "@/router";
 export default {
-    name: "logPage",
+    name: "logInPage",
     data() {
         return {
             email: "",
