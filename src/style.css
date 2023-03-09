@@ -1,0 +1,175 @@
+.formWrapper {
+  width: 30%;
+  margin-left: 33%;
+  border: 8px solid grey;
+}
+.head {
+  font-size: 28px;
+  font-weight: bold;
+  margin-right: 12%;
+}
+.headPara {
+  display: flex;
+  font-size: 16px;
+}
+.wrap {
+  margin-left: 50px;
+}
+.formLabel {
+  width: 80%;
+  margin-top: 4%;
+  font-size: 18px;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-left: 1%;
+  display: flex;
+}
+input {
+  display: block;
+  width: 85%;
+  margin-top: 15px;
+  height: 30px;
+  font-size: 18px;
+  color: gray;
+  box-sizing: border-box;
+  margin-left: 1%;
+  border: 1px solid #BEC2C4;
+  padding-left: 10px;
+}
+.formCheck {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin-top: 2px;
+}
+.formCheck input {
+  margin-right: 16px;
+  width: 17px;
+}
+.formCheck label {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 14px;
+  margin-top: 20px;
+}
+.checkboxlabel {
+  margin-bottom: 8px;
+}
+.submitBtn {
+  width: 220px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #6EA4E6;
+  color: white;
+  font-size: 18px;
+  border: none;
+  cursor: pointer;
+  margin-right: 12%;
+}
+.error {
+  color: red;
+  font-size: 15px;
+  margin-top: 10px;
+  display: flex;
+}
+.formLabel error {
+  width: 80%;
+  margin-top: 4%;
+  font-size: 18px;
+  letter-spacing: 1px;
+  display: inline-block;
+  font-weight: bold;
+  display: flex;
+}
+/* For mobile views */
+@media only screen and (max-width: 600px) {
+  .formWrapper {
+    width: 85%;
+    margin-left: 5%;
+  }
+  .head {
+    font-size: 16px;
+    margin-right: 0;
+  }
+  .headPara {
+    font-size: 14px;
+  }
+  .formLabel {
+    margin-left: 8px;
+  }
+  input {
+    margin-left: 3%;
+  }
+  .wrap {
+    margin-left: 0;
+  }
+  input,
+  select {
+    width: 90%;
+  }
+  .error {
+    font-size: 13px;
+    margin-left: 10px;
+  }
+  .formCheck label {
+    font-size: 15px;
+    width: 100%;
+  }
+  .submitBtn {
+    width: 80%;
+    margin-right: 0;
+  }
+}
+/* For tablets */
+@media only screen and (max-width: 1024px) {
+  .formWrapper {
+    width: 60%;
+    margin-left: 20%;
+  }
+  .head {
+    font-size: 24px;
+    margin-right: 0;
+  }
+  .headPara {
+    font-size: 16px;
+  }
+  .formLabel {
+    margin-left: 8px;
+  }
+  input {
+    margin-left: 3%;
+  }
+  .wrap {
+    margin-left: 0;
+  }
+  input,
+  select {
+    width: 90%;
+  }
+  .error {
+    font-size: 13px;
+    margin-left: 10px;
+  }
+  .formCheck label {
+    font-size: 15px;
+    width: 100%;
+  }
+  .submitBtn {
+    width: 80%;
+    margin-right: 0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
