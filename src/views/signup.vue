@@ -39,6 +39,7 @@
                 <input type="checkbox" v-model="signupData.term" />
                 <label class="checkboxlabel">ACCEPT TERMS AND CONDITIONS</label>
             </div>
+
             <button type="submit" class="submitBtn">Create an account</button>
         </form>
     </div>
@@ -53,15 +54,8 @@ import {
 export default {
     name: 'signUpPage',
     setup() {
-        const {
-            signupData,
-            formSubmit,
-
-        } = loginApi();
         return {
-            signupData,
-            formSubmit,
-
+            ...loginApi()
         };
     },
 };
