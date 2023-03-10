@@ -6,32 +6,33 @@
         <form @submit.prevent="formSubmit">
             <label class="formLabel">Firstname</label>
             <input type="text" v-model="signupData.firstName" />
-            <div v-if="firstNameError" class="error">{{ signupData.firstNameError }}</div>
-            <div v-if="!firstNameError && formSubmitted" class="formLabel error">
+            <div v-if="signupData.firstNameError" class="error">{{ signupData.firstNameError }}</div>
+            <div v-if="!signupData.firstNameError && signupData.formSubmitted" class="formLabel error">
                 First name must be at least 4 characters long
             </div>
             <label class="formLabel">Lastname</label>
             <input type="text" v-model="signupData.lastName" />
-            <div v-if="lastNameError" class="error">{{ signupData.lastNameError }}</div>
-            <div v-if="!lastNameError && formSubmitted" class="formLabel error">
+            <div v-if="signupData.lastNameError" class="error">{{ signupData.lastNameError }}</div>
+            <div v-if="!signupData.lastNameError && signupData.formSubmitted" class="formLabel error">
                 Last name must be at least 4 characters long
             </div>
             <label class="formLabel">Password</label>
             <input type="password" v-model="signupData.password" />
-            <div v-if="passwordError" class="error">{{ signupData.passwordError }}</div>
-            <div v-if="!passwordError && formSubmitted" class="formLabel error">
-                password must be contain 8 character
+            <div v-if="signupData.passwordError" class="error">{{ signupData.passwordError }}</div>
+            <div v-if="!signupData.passwordError && signupData.formSubmitted" class="formLabel error">
+                Password must contain at least 8 characters
             </div>
             <label class="formLabel">Email</label>
             <input type="email" v-model="signupData.email" />
-            <div v-if="!emailError && formSubmitted" class="formLabel error">
+            <div v-if="signupData.emailError" class="error">{{ signupData.emailError }}</div>
+            <div v-if="!signupData.emailError && signupData.formSubmitted" class="formLabel error">
                 Please enter a valid email
             </div>
-            <div v-if="emailError" class="error">{{ signupData. emailError }}</div>
+
             <label class="formLabel">Role</label>
             <input type="text" v-model="signupData.roleId" />
-            <div v-if="roleIdError" class="error">{{ signupData.roleIdError }}</div>
-            <div v-if="!roleIdError && formSubmitted" class="formLabel error">
+            <div v-if="signupData.roleIdError" class="error">{{ signupData.roleIdError }}</div>
+            <div v-if="!signupData.roleIdError && signupData.formSubmitted" class="formLabel error">
                 Role ID cannot be empty
             </div>
             <div class="formCheck">
@@ -46,26 +47,22 @@
 
 <script>
 import {
-    signUp
-} from '../composable/loginApi.js'
-export default {
-    name: "signUpPage",
-    setup() {
+    loginApi
+} from '../composable/loginApi.js';
 
+export default {
+    name: 'signUpPage',
+    setup() {
         const {
             signupData,
-            formSubmit
-        } = signUp();
+            formSubmit,
+
+        } = loginApi();
         return {
             signupData,
             formSubmit,
-            firstNameError: "",
-            lastNameError: "",
-            passwordError: "",
-            emailError: "",
-            roleIdError: "",
-        }
 
-    }
-}
+        };
+    },
+};
 </script>

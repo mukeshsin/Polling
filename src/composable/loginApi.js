@@ -1,14 +1,14 @@
 import { reactive } from "vue";
-import axios from "axios";
-import router from "@/router";
+import { useStore } from "vuex";
 
-export const signUp = () => {
+export const loginApi = () => {
+  const store = useStore();
   const signupData = reactive({
     firstName: "",
     lastName: "",
     password: "",
     email: "",
-    roleId: "",
+    roleId: "default",
     term: false,
     formSubmitted: false,
     firstNameError: "",
@@ -18,48 +18,79 @@ export const signUp = () => {
     roleIdError: "",
   });
 
-  const formSubmit = () => {
-    axios
-      .post("https://pollapi.innotechteam.in/user/register", signupData)
-      .then((response) => {
-        console.log(response.data);
-        router.push("/logInPage");
-      })
-      .catch((error) => {
-        console.log(error.response.data);
+  // for signup
+  const formSubmit = async () => {
+    try {
+      await store.dispatch("signup", {
+        email: signupData.email,
+        firstName: signupData.firstName,
+        lastName: signupData.lastName,
+        roleId: signupData.roleId,
+        password: signupData.password,
       });
+      console.log("user created successfully");
+    } catch (error) {
+      console.error(error);
+    }
     // Firstname validation
-    if (signupData.signupData.firstName.length < 4) {
-      signupData.firstNameError = " First name must be contain 4 character";
+    if (signupData.firstName.length < 4) {
+      signupData.firstNameError =
+        "First name must contain at least 4 characters";
     } else {
       signupData.firstNameError = "";
     }
     // Lastname validation
-    if (signupData.signupData.lastName.length < 4) {
-      signupData.lastNameError = "Last name must be contain 4 character";
+    if (signupData.lastName.length < 4) {
+      signupData.lastNameError = "Last name must contain at least 4 characters";
     } else {
       signupData.lastNameError = "";
     }
     // Password validation
     let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
-    if (!passwordReg.test(signupData.signupData.password)) {
-      signupData.passwordError = "Password must contain at least 8 characters ";
+    if (!passwordReg.test(signupData.password)) {
+      signupData.passwordError =
+        "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one number, and one special character";
     } else {
       signupData.passwordError = "";
     }
     // Email validation
     let emailReg = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/;
-    if (!emailReg.test(signupData.signupData.email)) {
+    if (!emailReg.test(signupData.email)) {
       signupData.emailError = "Please enter a valid email";
     } else {
       signupData.emailError = "";
     }
     // Role ID validation
-    if (signupData.signupData.roleId === "") {
+    if (signupData.roleId === "") {
       signupData.roleIdError = "Role ID cannot be empty";
     } else {
       signupData.roleIdError = "";
     }
+
+    if (
+      !signupData.firstNameError ||
+      !signupData.lastNameError ||
+      !signupData.passwordError ||
+      !signupData.emailError ||
+      !signupData.roleIdError
+    ) {
+      return;
+    }
+
+    signupData.formSubmitted = true;
   };
-  return { signupData, formSubmit };
+
+  // for login
+
+  const handleLogin = async () => {
+    try {
+      await store.dispatch("login", {
+        email: signupData.email,
+        password: signupData.password,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return { signupData, formSubmit, handleLogin };
 };
