@@ -1,5 +1,6 @@
-import { reactive } from "vue";
+import { reactive, computed } from "vue";
 import { useStore } from "vuex";
+import router from "@/router";
 
 export const loginApi = () => {
   const store = useStore();
@@ -16,6 +17,10 @@ export const loginApi = () => {
     passwordError: "",
     emailError: "",
     roleIdError: "",
+  });
+
+  const loginError = computed(() => {
+    return store.state.loginError;
   });
 
   // for signup
@@ -76,6 +81,7 @@ export const loginApi = () => {
         password: signupData.password,
       });
       console.log("User created successfully");
+      router.replace({ path: "/login" });
     } catch (error) {
       console.error(error);
     }
@@ -83,30 +89,7 @@ export const loginApi = () => {
 
   // for login
   const handleLogin = async () => {
-    // Email validation
-    let emailReg = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/;
-    if (!emailReg.test(signupData.email)) {
-      signupData.emailError = "Please enter a valid email";
-    } else {
-      signupData.emailError = "";
-    }
-
-    // Password validation
-    let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
-    if (!passwordReg.test(signupData.password)) {
-      signupData.passwordError =
-        "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one number, and one special character";
-    } else {
-      signupData.passwordError = "";
-    }
-
-    // Check if any errors
-
-    if (signupData.emailError || signupData.passwordError) {
-      return;
-    }
-
-    //make the api call
+    // Make the API call
     try {
       await store.dispatch("login", {
         email: signupData.email,
@@ -117,5 +100,6 @@ export const loginApi = () => {
       console.error(error);
     }
   };
-  return { signupData, formSubmit, handleLogin };
+
+  return { signupData, formSubmit, handleLogin, loginError };
 };

@@ -5,6 +5,7 @@ export default createStore({
   state: {
     roles: null,
     user: null,
+    loginError:null,
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -51,8 +52,9 @@ export default createStore({
     },
     
 
-    async login({ commit }, { email, password }) {
+    async login({ commit,state }, { email, password }) {
       try {
+        state.loginError=null;
         const res= await axios
           .post("https://pollapi.innotechteam.in/user/login", {
             email:email,
@@ -66,6 +68,7 @@ export default createStore({
         
       } catch (error) {
         console.log(error.response.data.message);
+        state.loginError=error.response.data.message;
       }
     },
   },

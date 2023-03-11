@@ -1,5 +1,6 @@
 <template>
 <nav>
+     
     <router-link to="/signup">Signup</router-link> |
     <router-link to="/login">Login</router-link>
 </nav>
@@ -13,8 +14,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 nav {
     padding: 30px;
 }
