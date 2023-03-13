@@ -1,17 +1,15 @@
 <template>
 <h1> welcome to polling-system</h1>
-    
 </template>
 
-
 <script>
- export default{
-    name:'homeView',
+export default {
+    name: 'homeView',
 
-    setup(){
+    setup() {
 
     }
- }
+}
 </script>
 
 <style scoped>

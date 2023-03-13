@@ -5,7 +5,9 @@ export default createStore({
   state: {
     roles: null,
     user: null,
-    loginError:null,
+    signupError: null,
+    signErr: null,
+    loginError: null,
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -30,8 +32,13 @@ export default createStore({
     },
 
     //for signup
-    async signup({ commit }, { email, firstName, lastName, roleId, password }) {
+    async signup(
+      { commit, state },
+      { email, firstName, lastName, roleId, password }
+    ) {
       try {
+        state.signErr = null;
+        state.signupError = null;
         const res = await axios.post(
           "https://pollapi.innotechteam.in/user/register",
           {
@@ -43,32 +50,36 @@ export default createStore({
           }
         );
         const { user } = res.data;
-        localStorage.setItem("user", JSON.stringify(user)); // add this line to set user data to local storage
-    
+        localStorage.setItem("user", JSON.stringify(user));
         commit("setUser", user);
+        console.log("user created successfully");
       } catch (error) {
-        console.log(error);
+        if (error.response.data.errors) {
+          state.signupError = error.response.data.errors;
+        } else {
+          state.signErr = error.response.data;
+          state.signupError = null;
+        }
       }
     },
-    
-
-    async login({ commit,state }, { email, password }) {
+    async login({ commit, state }, { email, password }) {
       try {
-        state.loginError=null;
-        const res= await axios
-          .post("https://pollapi.innotechteam.in/user/login", {
-            email:email,
-            password:password,
-          })
-          
-            const { user, token } = res.data;
-            localStorage.setItem("user", JSON.stringify(user));
-            localStorage.setItem("userToken", JSON.stringify(token));
-            commit("setUser", user);
-        
+        state.loginError = null;
+        const res = await axios.post(
+          "https://pollapi.innotechteam.in/user/login",
+          {
+            email: email,
+            password: password,
+          }
+        );
+        const { user, token } = res.data;
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("userToken", JSON.stringify(token));
+        commit("setUser", user);
+        console.log("user login successfully");
       } catch (error) {
         console.log(error.response.data.message);
-        state.loginError=error.response.data.message;
+        state.loginError = error.response.data.message;
       }
     },
   },

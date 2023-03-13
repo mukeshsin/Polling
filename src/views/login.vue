@@ -1,22 +1,21 @@
 <template>
 <div class="login-box">
-    <h2 class="head">Log in</h2>
-    <p class="headPara">Here login an existing user</p>
+    <h1 class="head">Login Form</h1>
+    <h4 class="headPara">Here login an existing user</h4>
     <form @submit.prevent="handleLogin">
-        <label class="formLabel">Email</label>
+        <label>Email</label>
         <input type="email" class="formInput" v-model="signupData.email" />
-        <label class="formLabel">Password</label>
+        <label>Password</label>
         <input type="password" class="formInput" v-model="signupData.password" />
-        <span class="errors">{{loginError}}</span>
-        <button type="submit" class="submitBtn">Login</button>
+        <span class="errors">{{ loginError }}</span>
+        <button type="submit" class="loginBtn">Login</button>
     </form>
-
 </div>
 </template>
 
 <script>
 import {
-    loginApi
+    fetchApi
 } from "../composable/loginApi.js";
 
 export default {
@@ -26,11 +25,11 @@ export default {
             signupData,
             handleLogin,
             loginError
-        } = loginApi();
+        } = fetchApi();
         return {
             signupData,
             handleLogin,
-            loginError
+            loginError,
         };
     },
 };

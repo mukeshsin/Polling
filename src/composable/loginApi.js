@@ -1,105 +1,115 @@
-import { reactive, computed } from "vue";
+import { reactive, computed, ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import router from "@/router";
 
-export const loginApi = () => {
+export const fetchApi = () => {
   const store = useStore();
+  const router = useRouter();
   const signupData = reactive({
     firstName: "",
     lastName: "",
     password: "",
     email: "",
-    roleId: "default",
+    roleId: "null",
     term: false,
-    formSubmitted: false,
-    firstNameError: "",
-    lastNameError: "",
-    passwordError: "",
-    emailError: "",
-    roleIdError: "",
   });
 
+  const isSubmitted = ref(false);
+
+  //get roles
+  const roles = computed(() => {
+    return store.state.roles;
+  });
+
+  //get user
+  const user = computed(() => {
+    return store.state.user;
+  });
+
+  onMounted(async () => {
+    await store.dispatch("getRoles");
+    store.commit("setUser");
+  });
+
+  onMounted(() => {
+    store.state.loginError = null;
+  });
+
+  //errors
+  const signUpErr = ref("");
+  const signupError = computed(() => {
+    return store.state.signupError;
+  });
+  const signErr = computed(() => {
+    return store.state.signErr;
+  });
   const loginError = computed(() => {
     return store.state.loginError;
   });
-
+  const loginBtn = ref(true);
   // for signup
-  const formSubmit = async () => {
-    // Firstname validation
-    if (signupData.firstName.length < 4) {
-      signupData.firstNameError =
-        "First name must contain at least 4 characters";
+  const handleSignup = async () => {
+    if (signupData.firstName.length > 4) {
+      if (signupData.lastName.length > 4) {
+        if (signupData.password.length > 8) {
+          signUpErr.value = "";
+          try {
+            await store.dispatch("signup", {
+              email: signupData.email,
+              password: signupData.password,
+              roleId: signupData.roleId,
+              firstName: signupData.firstName,
+              lastName: signupData.lastName,
+            });
+            if (!signupError.value && !signErr.value) {
+              isSubmitted.value = true;
+              router.replace({ path: "/login" });
+            } else {
+              signUpErr.value = "Email already exists.Try something else";
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          signUpErr.value = "Password length should be greater than 8";
+        }
+      } else {
+        signUpErr.value = "Last name should be greater than 4";
+      }
     } else {
-      signupData.firstNameError = "";
-    }
-    // Lastname validation
-    if (signupData.lastName.length < 4) {
-      signupData.lastNameError = "Last name must contain at least 4 characters";
-    } else {
-      signupData.lastNameError = "";
-    }
-    // Password validation
-    let passwordReg = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/;
-    if (!passwordReg.test(signupData.password)) {
-      signupData.passwordError =
-        "Password must contain at least 8 characters, one lowercase letter, one uppercase letter, one number, and one special character";
-    } else {
-      signupData.passwordError = "";
-    }
-    // Email validation
-    let emailReg = /^[\w-.]+@([\w-]+.)+[\w-]{2,4}$/;
-    if (!emailReg.test(signupData.email)) {
-      signupData.emailError = "Please enter a valid email";
-    } else {
-      signupData.emailError = "";
-    }
-    // Role ID validation
-    if (signupData.roleId === "default") {
-      signupData.roleIdError = "Please select a valid role";
-    } else {
-      signupData.roleIdError = "";
-    }
-
-    // Check if any errors exist
-    if (
-      signupData.firstNameError ||
-      signupData.lastNameError ||
-      signupData.passwordError ||
-      signupData.emailError ||
-      signupData.roleIdError
-    ) {
-      return;
-    }
-
-    // Make the API call
-    try {
-      await store.dispatch("signup", {
-        email: signupData.email,
-        firstName: signupData.firstName,
-        lastName: signupData.lastName,
-        roleId: signupData.roleId,
-        password: signupData.password,
-      });
-      console.log("User created successfully");
-      router.replace({ path: "/login" });
-    } catch (error) {
-      console.error(error);
+      signUpErr.value = "First name length should be greater than 4";
     }
   };
+  const formSubmit = () => {
+    isSubmitted.value = false;
+    router.push({ name: "/login" });
+  };
 
-  // for login
   const handleLogin = async () => {
-    // Make the API call
     try {
       await store.dispatch("login", {
         email: signupData.email,
         password: signupData.password,
       });
-      console.log("User login successfully");
+      if (!loginError.value) {
+        router.replace({ path: "/" });
+      }
+      console.log("User login  successfully");
     } catch (error) {
       console.error(error);
     }
   };
 
-  return { signupData, formSubmit, handleLogin, loginError };
+  return {
+    user,
+    roles,
+    signupData,
+    isSubmitted,
+    formSubmit,
+    handleLogin,
+    loginError,
+    signUpErr,
+    handleSignup,
+    loginBtn,
+  };
 };
