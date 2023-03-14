@@ -1,3 +1,4 @@
+/* For Signup and login */
 * {
   box-sizing: border-box;
 }
@@ -222,4 +223,25 @@ form input {
 }
 /* For tablet views */
 @media only screen and (min-width: 601px) and (max-width: 1024px) {
+}
+
+/* For add poll */
+
+.formWrapper{
+  width: 360px;
+  height: 100%;
+  margin: auto;
+  border: 2px solid grey;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+
+
+}
+
+.poll-head{
+  font-size:24px;
+}
+
+.poll-para{
+  font-size:15px;
 }
