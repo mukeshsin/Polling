@@ -14,6 +14,7 @@ export const fetchApi = () => {
     term: false,
   });
 
+  const isLoading = ref(false);
   const isSubmitted = ref(false);
 
   //get roles
@@ -52,23 +53,32 @@ export const fetchApi = () => {
     if (signupData.firstName.length > 4) {
       if (signupData.lastName.length > 4) {
         if (signupData.password.length > 8) {
-          signUpErr.value = "";
-          try {
-            await store.dispatch("signup", {
-              email: signupData.email,
-              password: signupData.password,
-              roleId: signupData.roleId,
-              firstName: signupData.firstName,
-              lastName: signupData.lastName,
-            });
-            if (!signupError.value && !signErr.value) {
-              isSubmitted.value = true;
-              router.replace({ path: "/login" });
-            } else {
-              signUpErr.value = "Email already exists.Try something else";
+          if (signupData.email.length > 0) {
+            signUpErr.value = "";
+            isLoading.value = true;
+            try {
+              await store.dispatch("signup", {
+                email: signupData.email,
+                password: signupData.password,
+                roleId: signupData.roleId,
+                firstName: signupData.firstName,
+                lastName: signupData.lastName,
+              });
+              if (!signupError.value && !signErr.value) {
+                isSubmitted.value = true;
+                setTimeout(() => {
+                  router.replace({ path: "/login" });
+                  isLoading.value = false;
+                }, "2000");
+              } else {
+                signUpErr.value = "Email already exists.Try something else";
+              }
+            } catch (error) {
+              console.log(error);
             }
-          } catch (error) {
-            console.log(error);
+            isLoading.value = false;
+          } else {
+            signUpErr.value = "Email field is required";
           }
         } else {
           signUpErr.value = "Password length should be greater than 8";
@@ -82,7 +92,7 @@ export const fetchApi = () => {
   };
   const formSubmit = () => {
     isSubmitted.value = false;
-    router.push({ name: "/login" });
+    isLoading.value = false;
   };
 
   const handleLogin = async () => {
@@ -111,5 +121,6 @@ export const fetchApi = () => {
     signUpErr,
     handleSignup,
     loginBtn,
+    isLoading,
   };
 };

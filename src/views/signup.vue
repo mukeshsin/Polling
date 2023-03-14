@@ -28,14 +28,17 @@
             <label class="checkboxlabel">ACCEPT TERMS AND CONDITIONS</label>
         </div>
         <span class="errors">{{ signUpErr }}</span>
-        <successToast v-if="isSubmitted">
-            <template v-slot:content>You have successfully registered</template>
-        </successToast>
+
         <button type="submit" class="submitBtn">
+            <span v-if="isLoading"><i class="fa fa-spinner fa-spin"></i></span>
             Create an account
         </button>
     </form>
-
+</div>
+<div class="ajdustToast">
+    <successToast v-if="isSubmitted">
+        <template v-slot:content>You have successfully registered</template>
+    </successToast>
 </div>
 </template>
 
@@ -48,13 +51,12 @@ import successToast from "../components/successToast.vue";
 export default {
     name: "SignUpPage",
     components: {
-        successToast
+        successToast,
     },
-
     setup() {
         return {
-            ...fetchApi()
+            ...fetchApi(),
         };
-    }
+    },
 };
 </script>
