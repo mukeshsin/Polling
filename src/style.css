@@ -1,0 +1,225 @@
+* {
+  box-sizing: border-box;
+}
+.signup-box {
+  width: 360px;
+  height: 100%;
+  margin: auto;
+  border: 2px solid grey;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+}
+.login-box {
+  width: 360px;
+  height: 100%;
+  margin: auto;
+  border-radius: 3px;
+  border: 2px solid grey;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+}
+.head {
+  text-align: center;
+}
+.headPara {
+  text-align: center;
+  letter-spacing: 0;
+  font-size: 15px;
+}
+form {
+  width: 300px;
+  margin: 0 auto;
+}
+form label {
+  display: flex;
+  margin-top: 15px;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+form input {
+  width: 100%;
+  padding: 7px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  outline: none;
+  font-size: 20px;
+}
+.selectBox {
+  width: 100%;
+  color: gray;
+  display: flex;
+  padding: 7px;
+  font-size: 17px;
+  border-radius: 6px;
+}
+.formCheck {
+  display: flex;
+  flex-direction: row;
+}
+.formCheck input {
+  margin-right: 12px;
+  margin-top: 13px;
+  width: 17px;
+}
+.formCheck label {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.checkboxlabel {
+  margin-bottom: 8px;
+}
+.submitBtn {
+  width: 300px;
+  height: 35px;
+  margin-top: 10px;
+  border: none;
+  background-color: #49c1a2;
+  color: white;
+  font-size: 18px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+.loginBtn {
+  width: 300px;
+  height: 35px;
+  margin-top: 20px;
+  border: none;
+  background-color: #49c1a2;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.errors {
+  margin-left: 9px;
+  color: crimson;
+  display: flex;
+  margin-top: 5px;
+  font-size: 17px;
+}
+.toastWrap {
+  background-image: linear-gradient(to right, crimson, grey);
+  width: 24%;
+  height: 80px;
+  border-radius: 9px;
+  text-align: center;
+  margin: auto;
+  margin-top: 20px;
+}
+.toastContent {
+  font-size: 20px;
+  color: white;
+  font-weight: bolder;
+  padding-top: 25px;
+}
+.successToast {
+  position: absolute;
+  top: 200px;
+  right: 300px;
+}
+
+.ajdustToast {
+  margin-bottom: 700px;
+}
+
+/* For mobile views */
+@media only screen and (max-width: 600px) {
+  .signup-box {
+    margin-right: 10px;
+    width: 300px;
+    height: 650px;
+  }
+
+  .login-box {
+    width: 300px;
+    height: 360px;
+    margin: auto;
+    border-radius: 3px;
+    border: 2px solid grey;
+    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  .headPara {
+    text-align: center;
+    letter-spacing: 0;
+    font-size: 14px;
+  }
+
+  form {
+    width: 270px;
+    margin: 0 auto;
+  }
+  form label {
+    display: flex;
+    margin-top: 12px;
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  form input {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+    font-size: 20px;
+  }
+
+  .formCheck label {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  .submitBtn {
+    width: 260px;
+    height: 35px;
+    margin-top: 10px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  .loginBtn {
+    width: 270px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color: #49c1a2;
+    color: white;
+    font-size: 18px;
+  }
+
+  .errors {
+    margin-left: 9px;
+    color: crimson;
+    display: flex;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .toastWrap {
+    background-image: linear-gradient(to right, grey, white);
+    width: 100%;
+    height: 30px;
+    border-radius: 10px;
+    text-align: center;
+    align-items: center;
+    margin-top: 7px;
+  }
+  .toastContent {
+    font-size: 16px;
+    color: #0e3b37;
+    font-weight: bolder;
+  }
+  .successToast {
+    position: absolute;
+    top: 200px;
+    left: 300px;
+  }
+}
+/* For tablet views */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+}
