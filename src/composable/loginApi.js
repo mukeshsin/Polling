@@ -32,10 +32,6 @@ export const fetchApi = () => {
     store.commit("setUser");
   });
 
-  onMounted(() => {
-    store.state.loginError = null;
-  });
-
   //errors
   const signUpErr = ref("");
   const signupError = computed(() => {
@@ -90,10 +86,6 @@ export const fetchApi = () => {
       signUpErr.value = "First name length should be greater than 4";
     }
   };
-  const formSubmit = () => {
-    isSubmitted.value = false;
-    isLoading.value = false;
-  };
 
   const handleLogin = async () => {
     try {
@@ -115,7 +107,6 @@ export const fetchApi = () => {
     roles,
     signupData,
     isSubmitted,
-    formSubmit,
     handleLogin,
     loginError,
     signUpErr,

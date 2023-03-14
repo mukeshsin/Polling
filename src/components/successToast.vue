@@ -1,7 +1,7 @@
 <template>
 <div class="toastWrap">
     <div class="toastContent">
-        <slot name="content" @submit.prevent="formSubmit"></slot>
+        <slot name="content"></slot>
     </div>
 
 </div>
