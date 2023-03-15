@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Welcome to the polling system</h1>
+    <h1 class="headOne">Welcome to the polling system</h1>
     <addPoll></addPoll>
   </div>
 </template>
@@ -17,5 +17,8 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+.headOne{
+  font-size:23px;
+  margin-top:14px
+}
 </style>

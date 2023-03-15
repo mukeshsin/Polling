@@ -8,6 +8,8 @@ export default createStore({
     signupError: null,
     signErr: null,
     loginError: null,
+    poll: null,
+    polls:[],
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -15,6 +17,9 @@ export default createStore({
     },
     setUser: (state, data) => {
       state.user = data;
+    },
+    setPoll: (state, payload) => {
+      state.poll = payload;
     },
   },
   actions: {
@@ -82,6 +87,68 @@ export default createStore({
         state.loginError = error.response.data.message;
       }
     },
+
+    // add new poll
+
+    async addPoll({ commit }, { title, options }) {
+      try {
+        const res = await axios.post(
+          "https://pollapi.innotechteam.in/poll/add",
+          {
+            title: title,
+            options: options,
+          }
+        );
+        const { poll } = res.json;
+        commit("setPoll", poll);
+        console.log("create poll successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //get list poll
+
+    async getPollList({ commit }, { token }) {
+      try {
+        const res = await axios.get(
+          "https://pollapi.innotechteam.in/poll/list?page=${page}&limit=${limit}",
+          {
+            headers: {
+              Authorization:`Bearer ${token}`+ localStorage.getItem('token')
+            },
+          }
+        );
+        const { polls } = res.json;
+        commit("setpolls", polls);
+        console.log("get all list poll");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //get single poll
+    async getSinglePoll({commit},{token}){
+      try{
+        const res=await axios.get(
+          "https://pollapi.innotechteam.in/poll/?page=${page}",
+          {
+            header:{
+              Authorization:`Bearer ${token}`+ localStorage.getItem('token')
+
+            },
+          }
+        );
+        const {poll}=res.json;
+        commit("setPoll",poll);
+        console.log("get single poll successfully")
+      }catch(error){
+        console.log(error)
+      }
+    },
+
+    //update poll
+
   },
   modules: {},
 });

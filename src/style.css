@@ -226,22 +226,50 @@ form input {
 }
 
 /* For add poll */
-
-.formWrapper{
+.formWrapper {
   width: 360px;
   height: 100%;
   margin: auto;
   border: 2px solid grey;
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
   border-radius: 3px;
-
-
+}
+.poll-head {
+  font-size: 24px;
+  font-weight: bold;
+}
+.poll-para {
+  font-size: 18px;
+  display: flex;
+  margin-left: 30px;
+}
+.pollLabel {
+  display: flex;
+  margin-top: 12px;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
-.poll-head{
-  font-size:24px;
+.fa fa-add addIcon {
+  font-size: 25px;
 }
 
-.poll-para{
-  font-size:15px;
+.editPollIcon{
+padding:10px;
+ font-size:25px;
+}
+
+.deletePollIcon{
+  font-size:25px;
+  }
+
+.pollBtn {
+  width: 270px;
+  height: 35px;
+  margin-top: 20px;
+  border: none;
+  background-color: #49c1a2;
+  color: white;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
