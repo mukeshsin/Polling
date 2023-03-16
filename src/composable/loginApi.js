@@ -102,9 +102,6 @@ export const fetchApi = () => {
     }
   };
 
-  
-  
-
   return {
     user,
     roles,

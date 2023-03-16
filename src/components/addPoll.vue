@@ -24,7 +24,10 @@
 
     </form>
 
-     <button type="submit" class="pollBtn" @submit.prevent="getAllPoll">get all Poll</button>
+     <div>
+    <button class="pollBtn" @click="getpollList">Get Poll List</button>
+   
+  </div>
 </div>
 </template>
 
@@ -39,6 +42,7 @@ export default {
             ...pollApi(),
         };
     },
+   
 };
 </script>
 

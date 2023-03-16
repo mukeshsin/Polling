@@ -19,20 +19,24 @@ export const pollApi = () => {
 
 
 
-  const getAllPoll = async () => {
+  const getpollList = async () => {
+    console.log("Getting poll list...");
     try {
-      const response=await store.dispatch("getPollList", { token, page:1, limit:3 });
-      console.log(response);
-    
-    } catch (error){
+      const res = await store.dispatch("getAllPoll", {
+        page: 1,
+        limit: 4,
+      });
+      console.log(res);
+    } catch (error) {
       console.log(error);
     }
   };
+
   
 
   return {
     pollData,
-    getAllPoll,
+    getpollList,
     poll,
     polls,
   };
