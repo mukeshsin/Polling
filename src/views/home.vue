@@ -1,28 +1,29 @@
 <template>
-<div>
-    <h1 class="headOne">Welcome to the polling system</h1>
-    <addPoll></addPoll>
-    <br>
-    <br>
-    <pollList></pollList>
-</div>
+  <div>
+
+    <ul>
+      <li>
+       <router-link to="/addPoll">Add Poll</router-link>
+      </li>
+      <li>
+       <router-link to="/pollList">POll List</router-link>
+      </li>
+    </ul>
+    <router-view />
+  </div>
 </template>
 
 <script>
-import addPoll from '../components/addPoll.vue'
-import pollList from '../components/pollList.vue'
+
+
 export default {
-    name: 'HomeView',
-    components: {
-        addPoll,
-        pollList
-    }
+  name: 'HomeView',
 }
 </script>
 
 <style scoped>
 .headOne {
-    font-size: 23px;
-    margin-top: 14px
+  font-size: 23px;
+  margin-top: 14px;
 }
 </style>

@@ -7,7 +7,7 @@
 
 <script>
 import navbar from "./components/addNavbar.vue";
-import axios from "axios"
+
 
 export default {
     name: "App",
@@ -15,12 +15,6 @@ export default {
     navbar,
     },
 
-    created() {
-        axios.interceptors.request.use((config) => {
-            config.headers.token = JSON.parse(localStorage.getItem("userToken"));
-            return config;
-        });
-    },
 };
 </script>
 

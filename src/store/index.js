@@ -21,6 +21,9 @@ export default createStore({
     setPoll: (state, payload) => {
       state.poll = payload;
     },
+    setPolls: (state, payload) => {
+      state.polls = state.polls.concat(payload);
+    },
   },
   actions: {
     //for role
@@ -111,15 +114,15 @@ export default createStore({
 
     async getAllPoll({ commit }, { page, limit }) {
       try {
-        const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`
-        );
+        const res = await axios.get(`https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`);
+        const polls = res.data.rows;
         console.log(res.data);
-        commit("setPolls", res.data);
+        commit("setPolls", polls);
       } catch (error) {
         console.log(error);
       }
     },
+    
 
     //get single poll
     async getSinglePoll({ commit }, { id }) {
