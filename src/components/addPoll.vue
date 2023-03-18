@@ -8,14 +8,14 @@
         <label class="pollLabel">Poll Options:</label>
 
         <div class="inputWrap">
-            <input type="text" class="pollInput" placeholder="add option for poll"/>
+            <input type="text" class="pollInput" placeholder="add option for poll" />
             <div class="pollIcon" @click="addOptions">
                 <i class="fa fa-add addIcon"></i>
             </div>
         </div>
 
         <h4 class="optionsPoll">
-         
+
             <span class="editPollIcon" @click="editPollData(option)"><i class="fas fa-edit"></i></span>
             <span class="deletePollIcon" @click="deletePollData(option)"><i class="fa fa-trash"></i></span>
         </h4>
@@ -24,10 +24,13 @@
 
     </form>
 
-     <div>
-    <button class="pollBtn" @click="getpollList">Get Poll List</button>
-   
-  </div>
+    <div>
+        <button class="pollBtn" @click="getpollList">Get Poll List</button>
+
+    </div>
+    <div>
+       <button class="pollBtn" @click="getSinglepoll">Get single poll</button>
+    </div>
 </div>
 </template>
 
@@ -42,7 +45,7 @@ export default {
             ...pollApi(),
         };
     },
-   
+
 };
 </script>
 

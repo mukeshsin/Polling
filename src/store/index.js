@@ -125,12 +125,12 @@ export default createStore({
     
 
     //get single poll
-    async getSinglePoll({ commit }, { id }) {
+    async getSinglePoll({ commit }, { pollId }) {
       try {
         const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/${id}`
+          `https://pollapi.innotechteam.in/poll/${pollId}`
         );
-        console.log(res.data);
+        console.log(res.data && res.data.rows);
         commit("setPoll", res.data);
       } catch (error) {
         console.log(error);
@@ -143,7 +143,9 @@ export default createStore({
       try {
         const res = await axios.get(
           `https://pollapi.innotechteam.in/poll/${id}`
+          
         );
+        console.log(id)
         console.log(res.data);
         commit("setPoll", res.data);
       } catch (error) {
@@ -153,10 +155,10 @@ export default createStore({
 
     //delete poll
 
-    async deletePoll({ commit }, { id }) {
+    async deletePoll({ commit }, { PollId }) {
       try {
         const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/${id}`
+          `https://pollapi.innotechteam.in/poll/${PollId}`
         );
         console.log(res.data);
         commit("setPoll", res.data);
@@ -164,6 +166,8 @@ export default createStore({
         console.log(error);
       }
     },
+
+    
   },
   modules: {},
 });

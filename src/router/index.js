@@ -4,6 +4,7 @@ import signUpPage from "../views/signup.vue";
 import logInPage from "../views/login.vue";
 import addpoll from "../components/addPoll.vue";
 import pollList from "../components/pollList.vue";
+import showPoll from "../components/showPoll.vue"
 const routes = [
   {
     path: "/",
@@ -20,6 +21,11 @@ const routes = [
         name: "/pollList",
         component: pollList,
       },
+      {
+        path:"/showPoll",
+        name:"/showPOll",
+        component:showPoll,
+      }
     ],
   },
   {
