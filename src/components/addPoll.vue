@@ -16,21 +16,21 @@
 
         <h4 class="optionsPoll">
 
-            <span class="editPollIcon" @click="editPollData(option)"><i class="fas fa-edit"></i></span>
-            <span class="deletePollIcon" @click="deletePollData(option)"><i class="fa fa-trash"></i></span>
+            <span class="editPollIcon" @click="editNewOption(option)"><i class="fas fa-edit"></i></span>
+            <span class="deletePollIcon" @click="deleteNewOption(option)"><i class="fa fa-trash"></i></span>
         </h4>
 
         <button type="submit" class="pollBtn">Create Poll</button>
 
     </form>
 
-    <div>
-        <button class="pollBtn" @click="getpollList">Get Poll List</button>
-
-    </div>
+   
     <div>
        <button class="pollBtn" @click="getSinglepoll">Get single poll</button>
     </div>
+ 
+
+    
 </div>
 </template>
 

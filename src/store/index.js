@@ -125,12 +125,13 @@ export default createStore({
     
 
     //get single poll
-    async getSinglePoll({ commit }, { pollId }) {
+    async getSinglePoll({ commit }, {pollId }) {
       try {
         const res = await axios.get(
           `https://pollapi.innotechteam.in/poll/${pollId}`
         );
-        console.log(res.data && res.data.rows);
+       
+        console.log(res.data);
         commit("setPoll", res.data);
       } catch (error) {
         console.log(error);
@@ -145,7 +146,7 @@ export default createStore({
           `https://pollapi.innotechteam.in/poll/${id}`
           
         );
-        console.log(id)
+        
         console.log(res.data);
         commit("setPoll", res.data);
       } catch (error) {

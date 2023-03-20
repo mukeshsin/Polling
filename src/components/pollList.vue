@@ -1,6 +1,6 @@
 <template>
 <div class="formContainer" v-if="polls">
-    <h2 class="poll-head">Poll-System</h2>
+      <button class="pollBtn" @click="getpollList">Get Poll List</button> 
     <div class="poll" v-for="poll in polls" :key="poll.id">
         <div class="mainDiv">
             <h3>{{ poll.title }}</h3>
@@ -30,7 +30,11 @@ export default {
         return {
             ...pollApi(),
         };
+    
     },
+      
+
+  
 };
 </script>
 

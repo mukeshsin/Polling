@@ -2,30 +2,32 @@ import { createRouter, createWebHistory } from "vue-router";
 import homeView from "../views/home.vue";
 import signUpPage from "../views/signup.vue";
 import logInPage from "../views/login.vue";
-import addpoll from "../components/addPoll.vue";
+import addPoll from "../components/addPoll.vue";
 import pollList from "../components/pollList.vue";
-import showPoll from "../components/showPoll.vue"
+import showPoll from "../components/showPoll.vue";
+
 const routes = [
   {
     path: "/",
     name: "home",
+    redirect: "/pollList",
     component: homeView,
     children: [
       {
         path: "/addPoll",
-        name: "/addPoll",
-        component: addpoll,
+        name: "addPoll", // corrected name
+        component: addPoll,
       },
       {
         path: "/pollList",
-        name: "/pollList",
+        name: "pollList", // corrected name
         component: pollList,
       },
       {
-        path:"/showPoll",
-        name:"/showPOll",
-        component:showPoll,
-      }
+        path: "/showPoll",
+        name: "showPoll", // corrected name
+        component: showPoll,
+      },
     ],
   },
   {
@@ -39,6 +41,7 @@ const routes = [
     component: logInPage,
   },
 ];
+
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
