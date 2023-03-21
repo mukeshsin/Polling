@@ -1,59 +1,96 @@
 import { reactive, computed } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export const pollApi = () => {
   const store = useStore();
+  const router = useRouter();
 
-  const pollData = reactive({
-    title: "",
-    option: [],
-  });
-
+  // add new poll
   const newPoll = reactive({
     title: "",
-    option: [],
+    options: [],
+  });
+
+  // define i
+  let i = 0;
+
+   // define option
+   const option = reactive({
+    value: "",
   });
 
 
-  const i=0;
-  const option=('ref')
- 
+  // push to add poll router
+  const showAddBtn = () => {
+    router.push("/addPoll");
+  };
 
-// add new option in new polls
-  const addOptions=()=>{
-   if(option.value){
-    if(!newPoll.option.includes(option.value)){
-      newPoll.options[i]=option.value
-      i++ 
+  // add new option in new polls
+  const addOptions = () => {
+    if (option.value) {
+      if (!newPoll.options.includes(option.value)) {
+        newPoll.options[i] = option.value;
+        i++;
+      }
+      option.value = "";
     }
-    option.value=""
-   }
-  }
-  
+  };
+
+  //delete option in add poll
   const deleteNewOption = (key) => {
     newPoll.options = newPoll.options.filter((item) => {
-        return key !== item;
+      return key !== item;
     });
-    i--
-}
+    i--;
+  };
 
-  const getpollList = async () => {
-    console.log("Getting poll list...");
+  //update option in add poll
+  const updateNewOption = (key) => {
+    newPoll.options.push(option.value);
+    option.value = "";
+    newPoll.options = newPoll.options.filter((item) => {
+      return key !== item;
+    });
+    i--;
+  };
+  // add a newpoll in pollList
+  const addNewPOLL = async () => {
     try {
-      await store.dispatch("getAllPoll", {
-        page: 1,
-        limit: 4,
+      await store.dispatch("addPoll", {
+        title: newPoll.title,
+        options: newPoll.options,
       });
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getSinglepoll = async () => {
+  // delete poll
+
+  const deletePoll = async () => {
+    console.log("delete a poll");
+    try {
+      await store.dispatch("deletePoll", {
+        pollId: 321,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // update poll
+
+  const updatePoll = async () => {};
+
+  // showPoll
+
+  //get single poll api
+  const getSinglepoll = async (pollId) => {
     console.log("Get show poll...");
     try {
-      await store.dispatch("getSinglePoll",{
-      pollId:98
+      await store.dispatch("getSinglePoll", {
+        pollId: pollId,
       });
     } catch (error) {
       console.log(error);
@@ -61,10 +98,13 @@ export const pollApi = () => {
   };
 
   return {
-    pollData,
-    getpollList,
+    showAddBtn,
     addOptions,
     deleteNewOption,
+    updateNewOption,
+    addNewPOLL,
+    deletePoll,
+    updatePoll,
     poll: computed(() => {
       return store.state.poll;
     }),

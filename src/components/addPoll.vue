@@ -1,5 +1,5 @@
 <template>
-<div class="formWrapper">
+<div class="formWrapper" >
     <h3 class="poll-head">Add Poll</h3>
     <p class="poll-para">Here add a new poll</p>
     <form @submit.prevent="createPoll">
@@ -20,14 +20,12 @@
             <span class="deletePollIcon" @click="deleteNewOption(option)"><i class="fa fa-trash"></i></span>
         </h4>
 
-        <button type="submit" class="pollBtn">Create Poll</button>
+        <button type="submit" class="pollBtn" @click="addNewPOLL">Add new Poll</button>
 
     </form>
 
    
-    <div>
-       <button class="pollBtn" @click="getSinglepoll">Get single poll</button>
-    </div>
+   
  
 
     

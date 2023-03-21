@@ -101,6 +101,15 @@ export const fetchApi = () => {
       console.error(error);
     }
   };
+  
+  //logout
+  
+  const logout =()=>{
+    localStorage.removeItem('user')
+    localStorage.removeItem('userToken')
+    router.push('/')
+    
+  }
 
   return {
     user,
@@ -113,5 +122,6 @@ export const fetchApi = () => {
     handleSignup,
     loginBtn,
     isLoading,
+    logout,
   };
 };

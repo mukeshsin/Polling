@@ -16,15 +16,18 @@
 </template>
 
 <script>
-import {
-    fetchApi
-} from '../composable/loginApi';
+import {fetchApi} from '../composable/loginApi'
 export default {
+
     name: "nav-bar",
     setup() {
-        return {
-            ...fetchApi()
-        }
+    const user = JSON.parse(localStorage.getItem('user'))
+    const {logout}= fetchApi();
+    return {
+      user,
+      logout
+
+    }
     }
 };
 </script>
@@ -63,9 +66,9 @@ export default {
 
 .routerCss {
     background-color: #49c1a2;
-    width: 17%;
+    width: 15%;
     padding: 10px;
-    font-size: 15px;
+    font-size: 17px;
     letter-spacing: 1px;
     border-radius: 8px;
     color: black;
