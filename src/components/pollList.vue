@@ -1,6 +1,5 @@
 <template>
-<div class="formContainer" v-if="polls">
-
+<div class="formContainer">
     <div class="poll" v-for="poll in polls" :key="poll.id">
         <div class="mainDiv">
             <h3>{{ poll.title }}</h3>
@@ -12,10 +11,9 @@
         <div class="pollOptions" v-for="option in poll.optionList" :key="option.id">
             <input type="checkbox" class="checkboxFix" value="true " />
             <h2>{{ option.optionTitle }}</h2>
-            <span @click="showPollOption(option.id, option.optionTitle); updatePollOption(option.id)"><i class="fas fa-edit"></i></span>
+            <span @click="showPollOption(option.id, option.optionTitle)" class="optIcon"><i class="fas fa-edit"></i></span>
             <span class="optIcon" @click="deletePollOption(option.id)" v-if="poll.optionList.length > 3"><i class="fas fa-trash"></i></span>
         </div>
-
     </div>
 
     <div class="addBtn">
@@ -46,7 +44,9 @@ export default {
             deletePoll,
             updatePoll,
             deletePollOption,
-            showPollOption
+            showPollOption,
+            showAddBtn
+
         } = pollApi();
 
         onMounted(async () => {
@@ -66,7 +66,8 @@ export default {
             deletePoll,
             updatePoll,
             deletePollOption,
-            showPollOption
+            showPollOption,
+            showAddBtn
         };
     }
 

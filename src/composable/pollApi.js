@@ -1,4 +1,4 @@
-import { reactive, computed } from "vue";
+import { reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 
@@ -12,15 +12,16 @@ export const pollApi = () => {
     options: [],
   });
 
-  // define i
   let i = 0;
 
-   // define option
-   const option = reactive({
-    value: "",
-  });
+  const pollError = ref("");
+  const viewPolls = () => {
+    router.push("./polling");
+  };
 
-
+  const pollOption = reactive([]);
+  // Define a reactive option object
+  const option = ref("");
   // push to add poll router
   const showAddBtn = () => {
     router.push("/addPoll");
@@ -28,10 +29,11 @@ export const pollApi = () => {
 
   // add new option in new polls
   const addOptions = () => {
+    console.log(newPoll.options);
+    console.log(option.value);
     if (option.value) {
       if (!newPoll.options.includes(option.value)) {
-        newPoll.options[i] = option.value;
-        i++;
+        newPoll.options.push(option.value);
       }
       option.value = "";
     }
@@ -42,28 +44,44 @@ export const pollApi = () => {
     newPoll.options = newPoll.options.filter((item) => {
       return key !== item;
     });
-    i--;
   };
 
-  //update option in add poll
-  const updateNewOption = (key) => {
-    newPoll.options.push(option.value);
-    option.value = "";
+  // edit option in newpoll
+  const editNewOption = (key) => {
+    option.value = key;
     newPoll.options = newPoll.options.filter((item) => {
       return key !== item;
     });
-    i--;
   };
+
   // add a newpoll in pollList
-  const addNewPOLL = async () => {
-    try {
-      await store.dispatch("addPoll", {
-        title: newPoll.title,
-        options: newPoll.options,
-      });
-    } catch (error) {
-      console.log(error);
+  const addNewPoll = async () => {
+    for (i = 0; i < newPoll.options.length; i++) {
+      pollOption[i] = {
+        optionTitle: newPoll.options[i],
+      };
     }
+    if (newPoll.title.length > 10) {
+      if (newPoll.options.array.length > 2) {
+        pollError.value = "";
+        try {
+          await store.dispatch("addPoll", {
+            title: newPoll.title,
+            options: newPoll.options,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+
+        router.push("/");
+      } else{
+      pollError.value="title must be contain atleast 10 character more"
+    
+      }
+  
+
+    }  
+
   };
 
   // delete poll
@@ -101,10 +119,15 @@ export const pollApi = () => {
     showAddBtn,
     addOptions,
     deleteNewOption,
-    updateNewOption,
-    addNewPOLL,
+    editNewOption,
+    addNewPoll,
     deletePoll,
     updatePoll,
+    newPoll,
+    pollOption,
+    option,
+    viewPolls,
+    pollError,
     poll: computed(() => {
       return store.state.poll;
     }),

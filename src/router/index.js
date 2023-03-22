@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import homeView from "../views/home.vue";
 import signUpPage from "../views/signup.vue";
 import logInPage from "../views/login.vue";
@@ -15,17 +15,17 @@ const routes = [
     children: [
       {
         path: "/addPoll",
-        name: "addPoll", // corrected name
+        name: "addPoll",
         component: addPoll,
       },
       {
         path: "/pollList",
-        name: "pollList", // corrected name
+        name: "pollList",
         component: pollList,
       },
       {
         path: "/showPoll",
-        name: "showPoll", // corrected name
+        name: "showPoll",
         component: showPoll,
       },
     ],
@@ -43,8 +43,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes,
 });
 
 export default router;
+

@@ -16,18 +16,22 @@
 </template>
 
 <script>
-import {fetchApi} from '../composable/loginApi'
+import {
+    fetchApi
+} from '../composable/loginApi'
 export default {
 
     name: "nav-bar",
     setup() {
-    const user = JSON.parse(localStorage.getItem('user'))
-    const {logout}= fetchApi();
-    return {
-      user,
-      logout
+        const user = JSON.parse(localStorage.getItem('user'))
+        const {
+            logout
+        } = fetchApi();
+        return {
+            user,
+            logout
 
-    }
+        }
     }
 };
 </script>
@@ -38,15 +42,16 @@ export default {
     max-width: 100%;
     height: 100%;
     margin-bottom: 20px;
-     box-shadow: 0px 0px 4px 3px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
 .title {
     font-size: 25px;
     color: white;
     padding-top: 15px;
-    font-weight:bold;
-    letter-spacing: 1px;;
+    font-weight: bold;
+    letter-spacing: 1px;
+    ;
 }
 
 .home {
