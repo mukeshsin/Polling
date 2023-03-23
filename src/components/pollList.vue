@@ -6,18 +6,20 @@
             <div class="pollIcons">
                 <span @click="deletePoll(poll.id)"><i class="fa fa-trash"></i></span>
                 <span @click="updatePoll(poll.id)"><i class="fa fa-edit"></i></span>
+               
             </div>
         </div>
         <div class="pollOptions" v-for="option in poll.optionList" :key="option.id">
             <input type="checkbox" class="checkboxFix" value="true " />
             <h2>{{ option.optionTitle }}</h2>
-            <span @click="showPollOption(option.id, option.optionTitle)" class="optIcon"><i class="fas fa-edit"></i></span>
-            <span class="optIcon" @click="deletePollOption(option.id)" v-if="poll.optionList.length > 3"><i class="fas fa-trash"></i></span>
+            <span @click="showPollOption(option.id, option.optionTitle)" class="optionIcon"><i class="fas fa-edit"></i></span>
+            <span class="optionIcon" @click="deletePollOption(option.id)" v-if="poll.optionList.length >3"><i class="fas fa-trash"></i></span>
         </div>
     </div>
 
     <div class="addBtn">
         <button class="addPoll" @click="showAddBtn">Add poll</button>
+         <button class="add" @click="getSingle">getSinglePoll</button>
     </div>
 </div>
 </template>
@@ -45,7 +47,8 @@ export default {
             updatePoll,
             deletePollOption,
             showPollOption,
-            showAddBtn
+            showAddBtn,
+            getSingle,
 
         } = pollApi();
 
@@ -56,6 +59,7 @@ export default {
                     page: 1,
                     limit: 4,
                 });
+
             } catch (error) {
                 console.log(error);
             }
@@ -67,7 +71,8 @@ export default {
             updatePoll,
             deletePollOption,
             showPollOption,
-            showAddBtn
+            showAddBtn,
+            getSingle
         };
     }
 

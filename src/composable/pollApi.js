@@ -1,10 +1,11 @@
 import { reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export const pollApi = () => {
   const store = useStore();
   const router = useRouter();
+  const route = useRoute();
 
   // add new poll
   const newPoll = reactive({
@@ -16,8 +17,12 @@ export const pollApi = () => {
 
   const pollError = ref("");
   const viewPolls = () => {
-    router.push("./polling");
+    router.push("/polling");
   };
+
+  const updatePollTitle= ()=>{
+    router.push("/updatePoll")
+  }
 
   const pollOption = reactive([]);
   // Define a reactive option object
@@ -62,7 +67,7 @@ export const pollApi = () => {
       };
     }
     if (newPoll.title.length > 10) {
-      if (newPoll.options.array.length > 2) {
+      if (newPoll.options && newPoll.options.length > 2) {
         pollError.value = "";
         try {
           await store.dispatch("addPoll", {
@@ -72,25 +77,25 @@ export const pollApi = () => {
         } catch (error) {
           console.log(error);
         }
-
-        router.push("/");
-      } else{
-      pollError.value="title must be contain atleast 10 character more"
-    
-      }
   
-
-    }  
-
+        router.push("/pollList");
+        pollError.value = "";
+      } else {
+        pollError.value = "Options should be greater than 2";
+      }
+    } else {
+      pollError.value = "Title must contain atleast 10 characters";
+    }
   };
+  
 
   // delete poll
 
-  const deletePoll = async () => {
+  const deletePoll = async (pollId) => {
     console.log("delete a poll");
     try {
-      await store.dispatch("deletePoll", {
-        pollId: 321,
+      await store.dispatch("deletePollData", {
+        pollId: pollId,
       });
     } catch (error) {
       console.log(error);
@@ -98,18 +103,18 @@ export const pollApi = () => {
   };
 
   // update poll
+ 
 
   const updatePoll = async () => {};
 
   // showPoll
 
   //get single poll api
-  const getSinglepoll = async (pollId) => {
+  const getSingle = async () => {
+    const {id}=route.params
     console.log("Get show poll...");
     try {
-      await store.dispatch("getSinglePoll", {
-        pollId: pollId,
-      });
+      await store.dispatch("getSinglePoll", { pollId: id });
     } catch (error) {
       console.log(error);
     }
@@ -128,6 +133,8 @@ export const pollApi = () => {
     option,
     viewPolls,
     pollError,
+    updatePollTitle,
+    getSingle,
     poll: computed(() => {
       return store.state.poll;
     }),
@@ -138,6 +145,6 @@ export const pollApi = () => {
     user: computed(() => {
       return store.state.user;
     }),
-    getSinglepoll,
+    
   };
 };

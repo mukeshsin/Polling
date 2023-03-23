@@ -5,6 +5,7 @@ import logInPage from "../views/login.vue";
 import addPoll from "../components/addPoll.vue";
 import pollList from "../components/pollList.vue";
 import showPoll from "../components/showPoll.vue";
+import updatePoll from "../components/updatePoll.vue"
 
 const routes = [
   {
@@ -28,6 +29,12 @@ const routes = [
         name: "showPoll",
         component: showPoll,
       },
+
+      {
+        path:"/updatePoll",
+        name:"UpdatePoll",
+        component:updatePoll,
+      }
     ],
   },
   {

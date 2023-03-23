@@ -10,6 +10,7 @@ export default createStore({
     loginError: null,
     poll: null,
     polls: [],
+
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -103,7 +104,7 @@ export default createStore({
             options: options,
           }
         );
-        const { poll } = res.json;
+        const  poll  = res.data.rows;
         commit("setPoll", poll);
         console.log("create poll successfully");
       } catch (error) {
@@ -131,8 +132,8 @@ export default createStore({
           `https://pollapi.innotechteam.in/poll/${pollId}`
         );
        
-        console.log(res.data);
-        commit("setPoll", res.data);
+        const poll= res.data.rows
+        commit("setPoll",poll);
       } catch (error) {
         console.log(error);
       }
@@ -140,10 +141,10 @@ export default createStore({
 
     //update poll
 
-    async updatePoll({ commit }, { id }) {
+    async updatePoll({ commit }, { pollId }) {
       try {
         const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/${id}`
+          `https://pollapi.innotechteam.in/poll/${pollId}`
           
         );
         
@@ -156,17 +157,18 @@ export default createStore({
 
     //delete poll
 
-    async deletePoll({ commit }, { PollId }) {
+    async deletePollData({ commit, state }, { pollId }) {
       try {
-        const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/${PollId}`
+        const res = await axios.delete(
+          `https://pollapi.innotechteam.in/poll/${pollId}`
         );
         console.log(res.data);
-        commit("setPoll", res.data);
+        commit("setPolls", state.polls.filter((poll) => poll.id !== pollId));
       } catch (error) {
         console.log(error);
       }
     },
+    
 
     
   },
