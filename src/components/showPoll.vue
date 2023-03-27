@@ -1,47 +1,73 @@
 <template>
-  <div class="poll" v-if="poll">
-    <div class="pollIcon">
-      <span @click="viewPolls"><i class="fa-sharp fa-solid fa-arrow-left"></i></span>
+<div class="formContainer">
+    <div class="poll" v-if="poll">
+        <div class="Icons">
+            <span @click="viewPolls" class="arrow-left"><i class="fa-sharp fa-solid fa-arrow-left"></i></span>
+        </div>
+
+        <div class="mainDiv">
+            <h2>{{ poll.title }}</h2>
+        </div>
+
+        <div class="pollOptions" v-for="option in poll.optionList" :key="option.Id">
+            <input type="checkbox" value="true" @change="countVote(option.id, isChecked)" @click="option.voteCount.length += 1" />
+            <span>{{ option.optionTitle }} </span>
+            <span class="voteCss">Votes: {{ option.voteCount.length }} </span>
+        </div>
     </div>
-    <div class="pollHead">
-      <h3>{{ poll.title }}</h3>
-    </div>
-    <div class="polloptionList" v-for="option in poll.optionList" :key="option.id">
-      <input type="checkbox" class="checkboxFix" v-model="option.checked" />
-      <h2>{{ option.optionTitle }}</h2>
-    </div>
-  </div>
+</div>
 </template>
 
 <script>
-import { useStore } from "vuex";
-import { onMounted } from "vue";
-import { pollApi } from "../composable/pollApi";
-import { useRoute } from 'vue-router';
+import {
+    pollApi
+} from "../composable/pollApi";
+import {
+    onMounted
+} from "vue";
+import {
+    useStore
+} from "vuex";
+import {
+    useRoute
+} from "vue-router";
 
 export default {
-  name: "showPoll",
-  setup() {
-    const store = useStore();
-    const route= useRoute();
-    const { poll, viewPolls } = pollApi();
+    name: "showPoll",
+    setup() {
+        const {
+            poll,
+            polls,
+            viewPolls
+        } = pollApi();
+        const store = useStore();
+        const route = useRoute();
+        const {
+            id
+        } = route.params;
 
-    onMounted(async () => {
-      const {id}=route.params
-      console.log("Get show poll...");
-      try {
-        await store.dispatch("getSinglePoll", { pollId: id });
-      } catch (error) {
-        console.log(error);
-      }
-    });
+        onMounted(async () => {
+            try {
+                await store.dispatch("getSinglePoll", {
+                    pollId: id
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        });
 
-    return {
-      poll,
-      viewPolls,
-    };
-  },
+        return {
+            poll,
+            polls,
+            viewPolls
+        };
+    },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.arrow-left {
+    margin-right: 40%;
+    font-size: 20px;
+}
+</style>

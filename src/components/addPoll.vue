@@ -1,14 +1,14 @@
 <template>
-<div class="formWrapper">
-    <h3 class="poll-head">Add Poll</h3>
-    <p class="poll-para">Here add a new poll</p>
+<div class="formContainer">
+    <h3 class="pollHead">Add Poll</h3>
+    <p class="poll-para">Create new Poll</p>
     <form>
-        <label class="pollLabel">Poll Title:</label>
-        <input type="text" class="pollInput" placeholder="add title for poll" v-model="newPoll.title" />
-        <label class="pollLabel">Poll Options:</label>
+        <label class="pollLabel">Poll Title</label>
+        <input type="text" class="pollInput" v-model="newPoll.title" />
+        <label class="pollLabel">Poll Options</label>
 
         <div class="inputWrap">
-            <input type="text" class="pollInput" placeholder="add option for poll" v-model="option" />
+            <input type="text" class="pollInput" v-model="option" />
             <div class="pollIcon" @click="addOptions">
                 <i class="fa fa-plus addIcon"></i>
             </div>
@@ -19,10 +19,10 @@
             <span class="editPollIcon" @click="editNewOption(option)"><i class="fas fa-edit"></i></span>
             <span class="deletePollIcon" @click="deleteNewOption(option)"><i class="fa fa-trash"></i></span>
         </div>
-         <span class="addError">{{pollError}}</span>
+        <span class="addError">{{pollError}}</span>
         <div>
-        <button type="submit" class="pollBtn" @click=" addNewPoll">Add New Poll</button>
-        <button type="submit" class="pollBtn" @click="viewPolls">Cancel</button>
+            <button type="submit" class="pollBtn" @click=" addNewPoll">Submit</button>
+            <button type="submit" class="cancelBtn" @click="viewPolls">Cancel</button>
         </div>
     </form>
 
@@ -49,4 +49,6 @@ export default {
     margin-left: 95%;
     margin-top: 20px;
 }
+
+
 </style>

@@ -19,14 +19,24 @@
 import {
     fetchApi
 } from '../composable/loginApi'
+// import {
+//     onMounted
+// } from "vue";
 export default {
 
     name: "nav-bar",
     setup() {
+
         const user = JSON.parse(localStorage.getItem('user'))
+    
         const {
             logout
         } = fetchApi();
+
+        // onMounted(()=>{
+        //   const user = JSON.parse(localStorage.getItem('user'))
+         
+        // })
         return {
             user,
             logout

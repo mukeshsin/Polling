@@ -10,6 +10,9 @@ export default createStore({
     loginError: null,
     poll: null,
     polls: [],
+    page:1,
+    limit:4,
+    optionId:[]
 
   },
   mutations: {
@@ -94,7 +97,6 @@ export default createStore({
     },
 
     // add new poll
-
     async addPoll({ commit }, { title, options }) {
       try {
         const res = await axios.post(
@@ -111,9 +113,9 @@ export default createStore({
         console.log(error);
       }
     },
-    //get list poll
 
-    async getAllPoll({ commit }, { page, limit }) {
+    //get list poll
+    async getAllPoll({ commit }, { page,limit }) {
       try {
         const res = await axios.get(`https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`);
         const polls = res.data.rows;
@@ -124,39 +126,18 @@ export default createStore({
       }
     },
     
-
-    //get single poll
-    async getSinglePoll({ commit }, {pollId }) {
+   // for get single Poll
+    async getSinglePoll({ commit }, { pollId }) {
       try {
-        const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/${pollId}`
-        );
-       
-        const poll= res.data.rows
-        commit("setPoll",poll);
+        const res = await axios.get(`https://pollapi.innotechteam.in/poll/${pollId}`);
+        const poll = res.data;
+        commit('setPoll', poll);
       } catch (error) {
         console.log(error);
       }
     },
-
-    //update poll
-
-    async updatePoll({ commit }, { pollId }) {
-      try {
-        const res = await axios.get(
-          `https://pollapi.innotechteam.in/poll/${pollId}`
-          
-        );
-        
-        console.log(res.data);
-        commit("setPoll", res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
+    
     //delete poll
-
     async deletePollData({ commit, state }, { pollId }) {
       try {
         const res = await axios.delete(
@@ -168,9 +149,41 @@ export default createStore({
         console.log(error);
       }
     },
-    
 
-    
+   // updatePoll
+    async updatePollData({ state }, { title, createdBy, pollId }) {
+      try {
+        await axios.put(`https://pollapi.innotechteam.in/poll/${pollId}`, {
+          title: title,
+          createdBy: createdBy
+        });
+        console.log("poll updated successfully");
+      } catch (error) {
+        console.log(error, state.limit);
+      }
+    },
+
+   // voteCount
+   async voteCount({ commit, state }, { optionId }) {
+    try {
+      const res = await axios.post(
+        `https://pollapi.innotechteam.in/vote/count`,
+        { optionId }
+      );
+      const updatedPoll = res.data;
+      const updatedPolls = state.polls.map((poll) => {
+        if (poll.id === updatedPoll.id) {
+          return updatedPoll;
+        }
+        return poll;
+      });
+      commit("setPolls", updatedPolls);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+   
   },
   modules: {},
 });

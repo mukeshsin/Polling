@@ -1,31 +1,39 @@
 import { reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
+import { user } from "../composable/loginApi";
 
 export const pollApi = () => {
   const store = useStore();
   const router = useRouter();
-  const route = useRoute();
 
-  // add new poll
+  //For newpoll
   const newPoll = reactive({
     title: "",
     options: [],
   });
 
+  // define i
   let i = 0;
 
+  // define pollError ref
   const pollError = ref("");
-  const viewPolls = () => {
-    router.push("/polling");
+
+  //to view single poll
+  const showPoll = (key) => {
+    router.push(`/showPoll/${key}`);
   };
 
-  const updatePollTitle= ()=>{
-    router.push("/updatePoll")
-  }
+  //to go back to poll list
+  const viewPolls = () => {
+    router.push("/pollList");
+  };
+
+  // condition for show add poll button
+  const showAddBtnCondition = ref(false);
 
   const pollOption = reactive([]);
-  // Define a reactive option object
+  // Define a option as  aref
   const option = ref("");
   // push to add poll router
   const showAddBtn = () => {
@@ -77,17 +85,16 @@ export const pollApi = () => {
         } catch (error) {
           console.log(error);
         }
-  
+
         router.push("/pollList");
         pollError.value = "";
       } else {
         pollError.value = "Options should be greater than 2";
       }
     } else {
-      pollError.value = "Title must contain atleast 10 characters";
+      pollError.value = "Title must contain more than 10 characters";
     }
   };
-  
 
   // delete poll
 
@@ -102,21 +109,28 @@ export const pollApi = () => {
     }
   };
 
-  // update poll
- 
+  //update a poll title
+  const titleUpdateError = ref(null);
+  const showUpdatePoll = (key) => {
+    router.push(`/updatePoll/${key}`);
+  };
 
-  const updatePoll = async () => {};
-
-  // showPoll
-
-  //get single poll api
-  const getSingle = async () => {
-    const {id}=route.params
-    console.log("Get show poll...");
-    try {
-      await store.dispatch("getSinglePoll", { pollId: id });
-    } catch (error) {
-      console.log(error);
+  const updateTitle = async (keyA, keyB) => {
+    if (keyA.length > 10) {
+      try {
+        await store.dispatch("updatePollData", {
+          title: keyA,
+          createdBy: user.value.id,
+          pollId: keyB,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      router.push("/pollList");
+      titleUpdateError.value = "";
+    } else {
+      titleUpdateError.value =
+        "Please add a title with more than 10 characters";
     }
   };
 
@@ -127,14 +141,17 @@ export const pollApi = () => {
     editNewOption,
     addNewPoll,
     deletePoll,
-    updatePoll,
     newPoll,
     pollOption,
     option,
     viewPolls,
     pollError,
-    updatePollTitle,
-    getSingle,
+    showAddBtnCondition,
+    showPoll,
+    titleUpdateError,
+    showUpdatePoll,
+    updateTitle,
+
     poll: computed(() => {
       return store.state.poll;
     }),
@@ -145,6 +162,5 @@ export const pollApi = () => {
     user: computed(() => {
       return store.state.user;
     }),
-    
   };
 };

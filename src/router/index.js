@@ -6,6 +6,7 @@ import addPoll from "../components/addPoll.vue";
 import pollList from "../components/pollList.vue";
 import showPoll from "../components/showPoll.vue";
 import updatePoll from "../components/updatePoll.vue"
+import updateOption from "../components/updateoption.vue"
 
 const routes = [
   {
@@ -25,15 +26,21 @@ const routes = [
         component: pollList,
       },
       {
-        path: "/showPoll",
+        path:'/showPoll/:id',
         name: "showPoll",
         component: showPoll,
       },
 
       {
-        path:"/updatePoll",
+        path: '/updatePoll/:id',
         name:"UpdatePoll",
         component:updatePoll,
+      },
+      {
+        path: '/updateOption/:id',
+        name:"UpdateOption",
+        component:updateOption,
+
       }
     ],
   },

@@ -234,14 +234,15 @@ form input {
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
   border-radius: 3px;
 }
-.poll-head {
-  font-size: 24px;
+.pollHead {
+  font-size: 27px;
   font-weight: bold;
+
 }
 .poll-para {
   font-size: 18px;
-  display: flex;
-  margin-left: 30px;
+  font-weight: bold;
+  margin-right: 11%;
 }
 .pollLabel {
   display: flex;
@@ -264,14 +265,29 @@ form input {
 }
 
 .pollBtn {
-  width: 270px;
+  width: 120px;
   height: 35px;
   margin-top: 20px;
   border: none;
   background-color: #49c1a2;
   color: white;
-  font-size: 18px;
+  font-size: 15px;
   margin-bottom: 20px;
+  border-radius: 5px;
+ 
+}
+
+.cancelBtn{
+
+  background-color: #49c1a2;
+  width:100px;
+  color: white;
+  font-size: 15px;
+  border: none;
+  height: 35px;
+  margin-left:10px;
+  border-radius:5px
+
 }
 
 /* For polllist */
@@ -296,19 +312,19 @@ form input {
   margin-left: 20px;
   margin-bottom: 20px;
 }
-.pollIcons {
-  margin-left: 30%;
+.Icons {
+  margin-left: 20%;
   color: #bec2c4;
   font-size: 19px;
 }
 
-.pollIcons span {
+.Icons span {
   margin-bottom: 20%;
   font-weight: bold;
-  margin-right: 8px;
+  margin-right: 7px;
   cursor: pointer;
 }
-.pollIcons span:hover {
+.Icons span:hover {
   color: #333;
 }
 
@@ -317,9 +333,16 @@ form input {
   text-align: center;
   align-items: center;
   justify-content: center;
-  width: 360px;
+  width: 380px;
 }
 .mainDiv h3 {
+  color: #49c1a2;
+  font-size: 25px;
+
+}
+
+.mainDiv h2{
+  margin-right: 35%;
   color: #49c1a2;
   font-size: 25px;
 }
@@ -333,12 +356,14 @@ form input {
 
 .pollOptions input[type="checkbox"] {
   margin-right: 12px;
+  
 }
 
-.pollOptions h2 {
+.pollOptions span {
   margin: 0;
   font-size: 16px;
   margin-right: 7px;
+ 
 }
 
 .pollOptions .optIcon {
@@ -354,3 +379,17 @@ form input {
 .pollOptions .optIcon i {
   margin-right: 5px;
 }
+
+.addError {
+  color: red;
+  border: none;
+  font-size: 15px;
+  background-color: #f2dedf
+}
+
+.voteCss{
+  margin-left: 10px;
+  border-bottom:2px solid black
+
+}
+
