@@ -13,8 +13,8 @@ export default createStore({
     page: 1,
     limit: 4,
     titleUpdateError: null,
+    updateOptionError: null,
     optionId: [],
-    countState: JSON.parse(localStorage.getItem("optionId")),
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -29,9 +29,16 @@ export default createStore({
     setPolls: (state, payload) => {
       state.polls = payload;
     },
+    filterOption: (state, payload) => {
+       state.polls.map((poll) => {
+        poll.optionList= poll.optionList.filter(
+            (option) => option.id !== payload
+        )
+      });
+    },
+    
   },
 
-  
   actions: {
     //for role
     async getRoles({ commit }) {
@@ -126,7 +133,6 @@ export default createStore({
         const polls = res.data.rows;
         console.log(res.data);
         commit("setPolls", polls);
-      
       } catch (error) {
         console.log(error);
       }
@@ -175,7 +181,57 @@ export default createStore({
       }
     },
 
-   
+    //voteCount
+    async voteCount({ commit }, { optionId }) {
+      try {
+        console.log(optionId);
+        const res = await axios.post(
+          `https://pollapi.innotechteam.in/vote/count`,
+          {
+            optionId: optionId,
+          }
+        );
+        const updatedPoll = res.data;
+        commit("setPoll", updatedPoll);
+        console.log("vote counted successfully");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    //updatePollOption
+    async updatePollOption({ state }, { optionTitle, optionId }) {
+      try {
+        console.log(optionId);
+        console.log(optionTitle)
+        await axios.put(
+          `https://pollapi.innotechteam.in/option/edit/${optionId}`,
+          {
+            optionTitle: optionTitle,
+            optionId: optionId,
+          }
+        );
+        console.log("poll option successfully updated");
+      } catch (error) {
+        console.log(error, state.optionId);
+      }
+    },
+
+    //deletePollOption
+    async deletePollOption({ commit,  }, { optionId }) {
+      try {
+        console.log(optionId);
+        await axios.delete(`https://pollapi.innotechteam.in/option/delete/${optionId}`);
+
+        commit(
+          "filterOption",optionId
+         
+          
+        );
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
   modules: {},
 });

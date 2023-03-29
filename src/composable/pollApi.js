@@ -22,7 +22,7 @@ export const pollApi = () => {
 
   // get users
   const user = computed(() => {
-    return store.state.user
+    return store.state.user;
   });
 
   //get poll
@@ -41,11 +41,10 @@ export const pollApi = () => {
   const showPoll = (key) => {
     router.push(`/showPoll/${key}`);
   };
-  
 
   //to go back to poll list
   const viewPolls = () => {
-    router.push('/pollList');
+    router.push("/pollList");
   };
 
   // condition for show add poll button
@@ -88,8 +87,6 @@ export const pollApi = () => {
 
   // add a newpoll in pollList
   const addNewPoll = async () => {
-   
-   
     for (i = 0; i < newPoll.options.length; i++) {
       pollOption[i] = {
         optionTitle: newPoll.options[i],
@@ -160,18 +157,46 @@ export const pollApi = () => {
   };
 
   //voteCount
-  
-  const countVotes= async(optionId)=>{
-    try{
-      console.log(optionId)
-      await store.dispatch("voteCount",{
-        optionId
-      })
 
-    }catch(error){
-      console.log(error)
+  const countVotes = async (optionId) => {
+    try {
+      console.log(optionId);
+      await store.dispatch("voteCount", {
+        optionId,
+      });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
+
+  //updatePollOption
+  const updateOptionError = ref(null);
+  const showPollOption = (keyA, keyB) => {
+    router.push(`updateOption/${keyA}/${keyB}`);
+  };
+  const updateOption = async (keyA, keyB) => {
+    try {
+      await store.dispatch("updatePollOption", {
+        optionTitle: keyA,
+        optionId: keyB,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    router.push("/pollList");
+  };
+
+  const deletePollOption = async (optionId) => {
+    try {
+      console.log(optionId);
+      await store.dispatch("deletePollOption", {
+        optionId: optionId,
+      });
+      console.log("poll option delete successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     showAddBtn,
@@ -193,6 +218,10 @@ export const pollApi = () => {
     user,
     poll,
     polls,
-    countVotes
+    countVotes,
+    updateOptionError,
+    updateOption,
+    showPollOption,
+    deletePollOption,
   };
 };

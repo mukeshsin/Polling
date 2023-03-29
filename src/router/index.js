@@ -45,7 +45,7 @@ const routes = [
         component: updatePoll,
       },
       {
-        path: "/updateOption/:id",
+        path: "/updateOption/:id/:optionTitle",
         name: "UpdateOption",
         component: updateOption,
       },

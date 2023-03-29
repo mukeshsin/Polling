@@ -109,7 +109,7 @@ export const fetchApi = () => {
     localStorage.removeItem("userToken");
     localStorage.removeItem('optionId')
     store.state.polls=[]
-    router.push("/");
+    router.push("/login");
   };
 
   return {

@@ -31,7 +31,7 @@ export default {
   setup() {
     const {
       poll,
-
+      polls,
       viewPolls,
       updateTitle,
       titleUpdateError,
@@ -51,8 +51,8 @@ export default {
     });
     return {
       poll,
+      polls,
       id,
-
       viewPolls,
       updateTitle,
       titleUpdateError,
