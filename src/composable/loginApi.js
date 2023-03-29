@@ -22,9 +22,9 @@ export const fetchApi = () => {
     return store.state.roles;
   });
 
-  //get user
+  // get users
   const user = computed(() => {
-    return store.state.user;
+    return store.state.user
   });
 
   onMounted(async () => {
@@ -101,15 +101,16 @@ export const fetchApi = () => {
       console.error(error);
     }
   };
-  
+
   //logout
-  
-  const logout =()=>{
-    localStorage.removeItem('user')
-    localStorage.removeItem('userToken')
-    router.push('/')
-    
-  }
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("userToken");
+    localStorage.removeItem('optionId')
+    store.state.polls=[]
+    router.push("/");
+  };
 
   return {
     user,

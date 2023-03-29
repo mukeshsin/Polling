@@ -1,7 +1,6 @@
 import { reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
-import { user } from "../composable/loginApi";
 
 export const pollApi = () => {
   const store = useStore();
@@ -13,20 +12,40 @@ export const pollApi = () => {
     options: [],
   });
 
+  //
+
   // define i
   let i = 0;
 
   // define pollError ref
   const pollError = ref("");
 
+  // get users
+  const user = computed(() => {
+    return store.state.user
+  });
+
+  //get poll
+
+  const poll = computed(() => {
+    return store.state.poll;
+  });
+
+  //getPolls
+
+  const polls = computed(() => {
+    return store.state.polls;
+  });
+
   //to view single poll
   const showPoll = (key) => {
     router.push(`/showPoll/${key}`);
   };
+  
 
   //to go back to poll list
   const viewPolls = () => {
-    router.push("/pollList");
+    router.push('/pollList');
   };
 
   // condition for show add poll button
@@ -69,18 +88,24 @@ export const pollApi = () => {
 
   // add a newpoll in pollList
   const addNewPoll = async () => {
+   
+   
     for (i = 0; i < newPoll.options.length; i++) {
       pollOption[i] = {
         optionTitle: newPoll.options[i],
       };
     }
+
+    pollOption.sort((a, b) => {
+      return a.id - b.id;
+    });
     if (newPoll.title.length > 10) {
       if (newPoll.options && newPoll.options.length > 2) {
         pollError.value = "";
         try {
           await store.dispatch("addPoll", {
             title: newPoll.title,
-            options: newPoll.options,
+            options: pollOption,
           });
         } catch (error) {
           console.log(error);
@@ -89,7 +114,7 @@ export const pollApi = () => {
         router.push("/pollList");
         pollError.value = "";
       } else {
-        pollError.value = "Options should be greater than 2";
+        pollError.value = "Options should be more than 2";
       }
     } else {
       pollError.value = "Title must contain more than 10 characters";
@@ -97,7 +122,6 @@ export const pollApi = () => {
   };
 
   // delete poll
-
   const deletePoll = async (pollId) => {
     console.log("delete a poll");
     try {
@@ -115,13 +139,14 @@ export const pollApi = () => {
     router.push(`/updatePoll/${key}`);
   };
 
-  const updateTitle = async (keyA, keyB) => {
-    if (keyA.length > 10) {
+  const updateTitle = async (title, pollId) => {
+    if (title.length > 10) {
+      console.log(pollId);
       try {
         await store.dispatch("updatePollData", {
-          title: keyA,
+          title: title,
           createdBy: user.value.id,
-          pollId: keyB,
+          pollId: pollId,
         });
       } catch (error) {
         console.log(error);
@@ -133,6 +158,20 @@ export const pollApi = () => {
         "Please add a title with more than 10 characters";
     }
   };
+
+  //voteCount
+  
+  const countVotes= async(optionId)=>{
+    try{
+      console.log(optionId)
+      await store.dispatch("voteCount",{
+        optionId
+      })
+
+    }catch(error){
+      console.log(error)
+    }
+  }
 
   return {
     showAddBtn,
@@ -151,16 +190,9 @@ export const pollApi = () => {
     titleUpdateError,
     showUpdatePoll,
     updateTitle,
-
-    poll: computed(() => {
-      return store.state.poll;
-    }),
-
-    polls: computed(() => {
-      return store.state.polls;
-    }),
-    user: computed(() => {
-      return store.state.user;
-    }),
+    user,
+    poll,
+    polls,
+    countVotes
   };
 };

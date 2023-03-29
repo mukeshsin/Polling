@@ -52,7 +52,8 @@ export default {
             updateTitle,
             showPoll,
             showUpdatePoll,
-            showAddBtnCondition
+            showAddBtnCondition,
+            countVotes
 
         } = pollApi();
 
@@ -87,7 +88,8 @@ export default {
             updateTitle,
             showPoll,
             showUpdatePoll,
-            showAddBtnCondition
+            showAddBtnCondition,
+            countVotes
         };
     }
 

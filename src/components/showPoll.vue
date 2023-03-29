@@ -37,7 +37,7 @@ export default {
     setup() {
         const {
             poll,
-            polls,
+
             viewPolls
         } = pollApi();
         const store = useStore();
@@ -58,7 +58,7 @@ export default {
 
         return {
             poll,
-            polls,
+
             viewPolls
         };
     },

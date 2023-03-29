@@ -237,7 +237,7 @@ form input {
 .pollHead {
   font-size: 27px;
   font-weight: bold;
-
+  
 }
 .poll-para {
   font-size: 18px;
@@ -251,17 +251,30 @@ form input {
   margin-bottom: 5px;
 }
 
-.fa fa-add addIcon {
-  font-size: 25px;
+.inputWrap {
+  position: relative;
+}
+
+.inputWrap i {
+  font-size: 20px;
+  display: flex;
+  margin-left: 92%;
+  margin-bottom: 30px;
+  position: absolute;
+  top: 7px;
 }
 
 .editPollIcon {
   padding: 10px;
-  font-size: 25px;
+  font-size: 22px;
+  color:black;
+  font-weight:bold
 }
 
 .deletePollIcon {
-  font-size: 25px;
+  font-size: 20px;
+  color:black;
+  font-weight:bold
 }
 
 .pollBtn {
@@ -271,23 +284,20 @@ form input {
   border: none;
   background-color: #49c1a2;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 20px;
   border-radius: 5px;
- 
 }
 
-.cancelBtn{
-
+.cancelBtn {
   background-color: #49c1a2;
-  width:100px;
+  width: 100px;
   color: white;
-  font-size: 15px;
+  font-size: 16px;
   border: none;
   height: 35px;
-  margin-left:10px;
-  border-radius:5px
-
+  margin-left: 10px;
+  border-radius: 5px;
 }
 
 /* For polllist */
@@ -338,10 +348,9 @@ form input {
 .mainDiv h3 {
   color: #49c1a2;
   font-size: 25px;
-
 }
 
-.mainDiv h2{
+.mainDiv h2 {
   margin-right: 35%;
   color: #49c1a2;
   font-size: 25px;
@@ -356,14 +365,12 @@ form input {
 
 .pollOptions input[type="checkbox"] {
   margin-right: 12px;
-  
 }
 
 .pollOptions span {
   margin: 0;
   font-size: 16px;
   margin-right: 7px;
- 
 }
 
 .pollOptions .optIcon {
@@ -384,12 +391,10 @@ form input {
   color: red;
   border: none;
   font-size: 15px;
-  background-color: #f2dedf
+  background-color: #f2dedf;
 }
 
-.voteCss{
+.voteCss {
   margin-left: 10px;
-  border-bottom:2px solid black
-
+  border-bottom: 2px solid black;
 }
-
