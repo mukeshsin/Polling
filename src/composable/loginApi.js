@@ -50,7 +50,8 @@ export const fetchApi = () => {
       if (signupData.lastName.length > 4) {
         if (signupData.password.length > 8) {
           if (signupData.email.length > 0) {
-            signUpErr.value = "";
+            if(signupData.term){
+            signupError.value = "";
             isLoading.value = true;
             try {
               await store.dispatch("signup", {
@@ -73,6 +74,9 @@ export const fetchApi = () => {
               console.log(error);
             }
             isLoading.value = false;
+          }else{
+            signUpErr.value= "Please accept the terms and conditions"
+          }
           } else {
             signUpErr.value = "Email field is required";
           }
@@ -120,6 +124,7 @@ export const fetchApi = () => {
     handleLogin,
     loginError,
     signUpErr,
+    signErr,
     handleSignup,
     loginBtn,
     isLoading,

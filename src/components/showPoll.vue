@@ -10,7 +10,7 @@
         </div>
 
         <div class="pollOptions" v-for="option in poll.optionList" :key="option.Id">
-            <input type="checkbox" value="true" @change="countVote(option.id, isChecked)" @click="option.voteCount.length += 1" />
+            <input type="checkbox" value="true"  :disabled="option.disabled" @change="countVote(option.id, isChecked);option.disabled= true" @click="option.voteCount.length += 1" />
             <span>{{ option.optionTitle }} </span>
             <span class="voteCss">Votes: {{ option.voteCount.length }} </span>
         </div>
@@ -67,7 +67,9 @@ export default {
 
 <style scoped>
 .arrow-left {
-    margin-right: 40%;
+    margin-right: 50%;
     font-size: 20px;
 }
 </style>
+
+

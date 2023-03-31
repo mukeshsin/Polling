@@ -10,18 +10,21 @@
             </div>
         </div>
         <div class="pollOptions" v-for="option in poll.optionList" :key="option.id">
-            <input type="checkbox" class="checkboxFix" value="true" @change="countVotes(option.id, isChecked)" @click="option.voteCount.length += 1" />
+            <input type="checkbox" class="checkboxFix" value="true" :disabled="option.disabled" @change="countVotes(option.id, isChecked)" @click="option.voteCount.length += 1; option.disabled=true" />
             <span>{{ option.optionTitle }} </span>
             <span class="voteCss">Votes: {{ option.voteCount.length }} </span>
             <span @click="showPollOption(option.id, option.optionTitle)" class="optionIcon"><i class="fas fa-edit"></i></span>
             <span class="optionIcon" @click="deletePollOption(option.id)" v-if="poll.optionList.length > 2"><i class="fas fa-trash"></i></span>
         </div>
+
     </div>
 
     <div class="addBtn" v-if="showAddBtnCondition">
         <button class="addPoll" @click="showAddBtn">Add Poll</button>
     </div>
+
 </div>
+<span class="emptyError">{{ pollListError }}</span>
 </template>
 
 <script>
@@ -29,7 +32,8 @@ import {
     useStore
 } from "vuex";
 import {
-    onMounted
+    onMounted,
+    computed
 } from "vue";
 import {
     pollApi
@@ -52,9 +56,19 @@ export default {
             showUpdatePoll,
             showAddBtnCondition,
             countVotes,
+
         } = pollApi();
 
+        const pollListError = computed(() => {
+            if (polls.value.length === 0) {
+                return "Please Add a New Poll";
+            } else {
+                return "";
+            }
+        });
+
         onMounted(async () => {
+
             console.log("Getting poll list...");
             try {
                 await store.dispatch("getAllPoll", {
@@ -64,6 +78,7 @@ export default {
             } catch (error) {
                 console.log(error);
             }
+
         });
 
         onMounted(() => {
@@ -85,6 +100,7 @@ export default {
             showUpdatePoll,
             showAddBtnCondition,
             countVotes,
+            pollListError,
         };
     },
 };
@@ -103,5 +119,11 @@ export default {
     font-size: 17px;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.emptyError {
+    font-size: 18px;
+    color:crimson;
+    font-weight:bold
 }
 </style>

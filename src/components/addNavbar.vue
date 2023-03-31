@@ -3,7 +3,7 @@
     <div class="title">Polling-System</div>
     <div class="home" v-if="user">
         <router-link to="/home" class="routerCss">
-            <i class="fa fa-home" aria-hidden="true"></i>user logged in {{user.firstName}}
+        login as {{user.firstName}}
         </router-link>
         <button class="logOutbtn" @click="logout"> Logout</button>
     </div>
@@ -34,15 +34,15 @@ export default {
 .nav-bar {
     background-color: grey;
     max-width: 100%;
-    height: 100%;
+    height: 115px;
     margin-bottom: 20px;
     box-shadow: 0px 0px 4px 3px rgba(0, 0, 0, 0.3);
 }
 
 .title {
-    font-size: 25px;
+    font-size: 28px;
     color: white;
-    padding-top: 15px;
+    padding-top: 40px;
     font-weight: bold;
     letter-spacing: 1px;
     ;
@@ -65,13 +65,14 @@ export default {
 
 .routerCss {
     background-color: #49c1a2;
-    width: 15%;
-    padding: 10px;
+    width: 10%;
+    padding: 7px;
     font-size: 17px;
     letter-spacing: 1px;
     border-radius: 8px;
     color: black;
     text-decoration: none;
+    
 }
 
 .home i {
@@ -86,7 +87,7 @@ export default {
     background-color: blue;
     border: none;
     width: 7%;
-    padding: 10px;
+    padding: 7px;
     font-size: 17px;
     border-radius: 10px;
     cursor: pointer
@@ -97,10 +98,11 @@ export default {
     align-items: center;
     justify-content: flex-end;
     color: white;
-    margin-right: 40px;
-    margin-bottom: 20px;
+    margin-right: 17px;
+    margin-top:15px;
     letter-spacing: 2px;
     padding-bottom: 10px;
+    font-size: 20px;
 
 }
 
@@ -108,5 +110,9 @@ export default {
     color: white;
     text-decoration: none;
 
+}
+ 
+.router-link-exact-active {
+border-bottom: 2px solid white;
 }
 </style>

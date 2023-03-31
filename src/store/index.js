@@ -53,26 +53,17 @@ export default createStore({
     },
 
     //for signup
-    async signup(
-      { commit, state },
-      { email, firstName, lastName, roleId, password }
-    ) {
+    async signup({ state }, { email, firstName, lastName, roleId, password }) {
       try {
         state.signErr = null;
         state.signupError = null;
-        const res = await axios.post(
-          "https://pollapi.innotechteam.in/user/register",
-          {
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            roleId: roleId,
-            password: password,
-          }
-        );
-        const { user } = res.data;
-        localStorage.setItem("user", JSON.stringify(user));
-        commit("setUser", user);
+        await axios.post("https://pollapi.innotechteam.in/user/register", {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          roleId: roleId,
+          password: password,
+        });
         console.log("user created successfully");
       } catch (error) {
         if (error.response.data.errors) {

@@ -130,6 +130,8 @@ export const pollApi = () => {
     }
   };
 
+  const pollListError = ref("");
+
   //update a poll title
   const titleUpdateError = ref(null);
   const showUpdatePoll = (key) => {
@@ -137,11 +139,12 @@ export const pollApi = () => {
   };
 
   const updateTitle = async (title, pollId) => {
-    if (title.length > 10) {
+    const trimmedTitle = title.trim();
+    if (trimmedTitle.length > 10) {
       console.log(pollId);
       try {
         await store.dispatch("updatePollData", {
-          title: title,
+          title: trimmedTitle,
           createdBy: user.value.id,
           pollId: pollId,
         });
@@ -175,15 +178,21 @@ export const pollApi = () => {
     router.push(`updateOption/${optionTitle}/${id}`);
   };
   const updateOption = async (optionTitle, id) => {
-    try {
-      await store.dispatch("updatePollOption", {
-        optionTitle: optionTitle,
-        optionId: id,
-      });
-    } catch (error) {
-      console.log(error);
+    const trimmedOption = optionTitle.trim;
+    if (trimmedOption.length > 0) {
+      try {
+        await store.dispatch("updatePollOption", {
+          optionTitle: optionTitle,
+          optionId: id,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      router.push("/pollList");
+      updateOptionError.value = "";
+    } else {
+      updateOptionError.value = "optionTitle cannot be empty";
     }
-    router.push("/pollList");
   };
 
   const deletePollOption = async (optionId) => {
@@ -223,5 +232,6 @@ export const pollApi = () => {
     updateOption,
     showPollOption,
     deletePollOption,
+    pollListError,
   };
 };
