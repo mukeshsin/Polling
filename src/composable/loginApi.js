@@ -24,7 +24,7 @@ export const fetchApi = () => {
 
   // get users
   const user = computed(() => {
-    return store.state.user
+    return store.state.user;
   });
 
   onMounted(async () => {
@@ -107,8 +107,8 @@ export const fetchApi = () => {
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userToken");
-    localStorage.removeItem('optionId')
-    store.state.polls=[]
+    localStorage.removeItem("optionId");
+    store.state.polls = [];
     router.push("/login");
   };
 

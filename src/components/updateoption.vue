@@ -27,7 +27,7 @@ export default {
             poll,
             viewPolls,
             updateOption,
-            showPollOption ,
+            showPollOption,
             updateOptionError
         } = pollApi();
         const route = useRoute();
@@ -37,14 +37,14 @@ export default {
         const {
             optionTitle
         } = route.params;
-      
+
         return {
             poll,
             viewPolls,
             id,
             optionTitle,
             updateOption,
-            showPollOption ,
+            showPollOption,
             updateOptionError
         };
     },
@@ -52,18 +52,16 @@ export default {
 </script>
 
 <style scoped>
-
 .pollLabels {
-  font-size: 25px;
-  font-weight: bold;
-  margin-top: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 20px;
 }
 
 .pollInputs {
-  margin-top: 20px;
-  display: flex;
-  margin-left: 43%;
-  font-size: 18px;
+    margin-top: 20px;
+    display: flex;
+    margin-left: 43%;
+    font-size: 18px;
 }
-
 </style>

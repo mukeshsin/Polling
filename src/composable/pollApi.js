@@ -171,14 +171,14 @@ export const pollApi = () => {
 
   //updatePollOption
   const updateOptionError = ref(null);
-  const showPollOption = (keyA, keyB) => {
-    router.push(`updateOption/${keyA}/${keyB}`);
+  const showPollOption = (optionTitle, id) => {
+    router.push(`updateOption/${optionTitle}/${id}`);
   };
-  const updateOption = async (keyA, keyB) => {
+  const updateOption = async (optionTitle, id) => {
     try {
       await store.dispatch("updatePollOption", {
-        optionTitle: keyA,
-        optionId: keyB,
+        optionTitle: optionTitle,
+        optionId: id,
       });
     } catch (error) {
       console.log(error);

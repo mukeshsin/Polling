@@ -30,13 +30,12 @@ export default createStore({
       state.polls = payload;
     },
     filterOption: (state, payload) => {
-       state.polls.map((poll) => {
-        poll.optionList= poll.optionList.filter(
-            (option) => option.id !== payload
-        )
+      state.polls.map((poll) => {
+        poll.optionList = poll.optionList.filter(
+          (option) => option.id !== payload
+        );
       });
     },
-    
   },
 
   actions: {
@@ -203,7 +202,7 @@ export default createStore({
     async updatePollOption({ state }, { optionTitle, optionId }) {
       try {
         console.log(optionId);
-        console.log(optionTitle)
+        console.log(optionTitle);
         await axios.put(
           `https://pollapi.innotechteam.in/option/edit/${optionId}`,
           {
@@ -218,16 +217,14 @@ export default createStore({
     },
 
     //deletePollOption
-    async deletePollOption({ commit,  }, { optionId }) {
+    async deletePollOption({ commit }, { optionId }) {
       try {
         console.log(optionId);
-        await axios.delete(`https://pollapi.innotechteam.in/option/delete/${optionId}`);
-
-        commit(
-          "filterOption",optionId
-         
-          
+        await axios.delete(
+          `https://pollapi.innotechteam.in/option/delete/${optionId}`
         );
+
+        commit("filterOption", optionId);
       } catch (error) {
         console.log(error);
       }
