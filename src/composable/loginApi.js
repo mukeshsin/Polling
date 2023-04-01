@@ -22,6 +22,10 @@ export const fetchApi = () => {
     return store.state.roles;
   });
 
+  const isValidRoleId = computed(() => {
+    return roles.value.some((role) => role.id === signupData.roleId);
+  });
+
   // get users
   const user = computed(() => {
     return store.state.user;
@@ -50,33 +54,37 @@ export const fetchApi = () => {
       if (signupData.lastName.length > 4) {
         if (signupData.password.length > 8) {
           if (signupData.email.length > 0) {
-            if(signupData.term){
-            signupError.value = "";
-            isLoading.value = true;
-            try {
-              await store.dispatch("signup", {
-                email: signupData.email,
-                password: signupData.password,
-                roleId: signupData.roleId,
-                firstName: signupData.firstName,
-                lastName: signupData.lastName,
-              });
-              if (!signupError.value && !signErr.value) {
-                isSubmitted.value = true;
-                setTimeout(() => {
-                  router.replace({ path: "/login" });
-                  isLoading.value = false;
-                }, "2000");
+            if (isValidRoleId.value) {
+              if (signupData.term) {
+                signupError.value = "";
+                isLoading.value = true;
+                try {
+                  await store.dispatch("signup", {
+                    email: signupData.email,
+                    password: signupData.password,
+                    roleId: signupData.roleId,
+                    firstName: signupData.firstName,
+                    lastName: signupData.lastName,
+                  });
+                  if (!signupError.value && !signErr.value) {
+                    isSubmitted.value = true;
+                    setTimeout(() => {
+                      router.replace({ path: "/login" });
+                      isLoading.value = false;
+                    }, "2000");
+                  } else {
+                    signUpErr.value = "Email already exists.Try something else";
+                  }
+                } catch (error) {
+                  console.log(error);
+                }
+                isLoading.value = false;
               } else {
-                signUpErr.value = "Email already exists.Try something else";
+                signUpErr.value = "Please accept the terms and conditions";
               }
-            } catch (error) {
-              console.log(error);
+            } else {
+              signUpErr.value = "Please select a role";
             }
-            isLoading.value = false;
-          }else{
-            signUpErr.value= "Please accept the terms and conditions"
-          }
           } else {
             signUpErr.value = "Email field is required";
           }
@@ -98,16 +106,14 @@ export const fetchApi = () => {
         password: signupData.password,
       });
       if (!loginError.value) {
-        router.replace({ path: "/" });
+        router.replace({ path: "/pollList" });
       }
       console.log("User login  successfully");
     } catch (error) {
       console.error(error);
     }
   };
-
   //logout
-
   const logout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("userToken");

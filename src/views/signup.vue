@@ -16,7 +16,7 @@
       <input type="email" class="formInput" v-model="signupData.email" />
 
       <label class="formLabel">Role</label>
-      <select class="selectBox" v-model="signupData.roleId" required>
+      <select class="selectBox" v-model="signupData.roleId" >
         <option>Select A Role</option>
         <template v-for="role in roles" :key="role.id">
           <option :value="role.id">{{ role.name }}</option>
@@ -30,7 +30,7 @@
       <span class="errors">{{ signUpErr }}</span>
 
       <button type="submit" class="submitBtn">
-        <span v-if="isLoading"><i class="fa fa-spinner fa-spin"></i></span>
+        <span v-if="isLoading"><i class="fa fa-spinner fa-spin loaderCss"></i></span>
         Create an account
       </button>
     </form>

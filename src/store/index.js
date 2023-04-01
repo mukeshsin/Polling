@@ -15,6 +15,7 @@ export default createStore({
     titleUpdateError: null,
     updateOptionError: null,
     optionId: [],
+    vote: null,
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -23,12 +24,16 @@ export default createStore({
     setUser: (state) => {
       state.user = JSON.parse(localStorage.getItem("user"));
     },
-    setPoll: (state, payload) => {
-      state.poll = payload;
+    setPoll: (state) => {
+      state.poll = JSON.parse(localStorage.getItem("poll"));
     },
-    setPolls: (state, payload) => {
-      state.polls = payload;
+    setPolls: (state) => {
+      state.polls = JSON.parse(localStorage.getItem("polls"));
     },
+    setVote: (state) => {
+      state.vote = JSON.parse(localStorage.getItem("votes"));
+    },
+    
     filterOption: (state, payload) => {
       state.polls.map((poll) => {
         poll.optionList = poll.optionList.filter(
@@ -97,7 +102,7 @@ export default createStore({
     },
 
     // add new poll
-    async addPoll({ commit, state }, { title, options }) {
+    async addPoll({ commit }, { title, options }) {
       try {
         const res = await axios.post(
           "https://pollapi.innotechteam.in/poll/add",
@@ -107,10 +112,11 @@ export default createStore({
           }
         );
         const poll = res.data.rows;
+        localStorage.setItem("poll", JSON.stringify(poll));
         commit("setPoll", poll);
         console.log("create poll successfully");
       } catch (error) {
-        console.log(error, state.pollId);
+        console.log(error);
       }
     },
 
@@ -121,6 +127,7 @@ export default createStore({
           `https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`
         );
         const polls = res.data.rows;
+        localStorage.setItem("polls", JSON.stringify(polls));
         console.log(res.data);
         commit("setPolls", polls);
       } catch (error) {
@@ -135,6 +142,7 @@ export default createStore({
           `https://pollapi.innotechteam.in/poll/${pollId}`
         );
         const poll = res.data;
+        localStorage.setItem("poll", JSON.stringify(poll));
         commit("setPoll", poll);
       } catch (error) {
         console.log(error);
@@ -181,8 +189,9 @@ export default createStore({
             optionId: optionId,
           }
         );
-        const updatedPoll = res.data;
-        commit("setPoll", updatedPoll);
+        const votes = res.data;
+        localStorage.setItem("votes", JSON.stringify(votes));
+        commit("setVote", votes);
         console.log("vote counted successfully");
       } catch (error) {
         console.log(error);

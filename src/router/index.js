@@ -67,13 +67,15 @@ const routes = [
     path: "/login",
     name: "login",
     component: logInPage,
-    // // beforeEnter: (to, from, next) => {
-    // //   if (localStorage.getItem("user")) {
-    // //     next("/home");
-    // //   } else {
-    // //     next();
-    // //   }
-    // },
+    
+    beforeEnter:(to,from,next)=>{
+      if(localStorage.getItem("user")){
+        router.replace("/")
+      }else{
+        next();
+      }
+    }
+  
   },
 ];
 

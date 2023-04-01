@@ -12,8 +12,6 @@ export const pollApi = () => {
     options: [],
   });
 
-  //
-
   // define i
   let i = 0;
 
@@ -178,7 +176,7 @@ export const pollApi = () => {
     router.push(`updateOption/${optionTitle}/${id}`);
   };
   const updateOption = async (optionTitle, id) => {
-    const trimmedOption = optionTitle.trim;
+    const trimmedOption = optionTitle.trim();
     if (trimmedOption.length > 0) {
       try {
         await store.dispatch("updatePollOption", {
@@ -194,7 +192,6 @@ export const pollApi = () => {
       updateOptionError.value = "optionTitle cannot be empty";
     }
   };
-
   const deletePollOption = async (optionId) => {
     try {
       console.log(optionId);
