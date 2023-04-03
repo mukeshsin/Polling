@@ -48,6 +48,7 @@ export default {
   setup() {
     const {
       poll,
+      countVotes,
 
       viewPolls,
     } = pollApi();
@@ -72,6 +73,7 @@ export default {
       poll,
       isLoading,
       viewPolls,
+      countVotes
     };
   },
 };

@@ -30,10 +30,15 @@ export default createStore({
     setPolls: (state) => {
       state.polls = JSON.parse(localStorage.getItem("polls"));
     },
+
     setVote: (state) => {
-      state.vote = JSON.parse(localStorage.getItem("votes"));
+      state.vote = JSON.parse(localStorage.getItem("vote"));
     },
-    
+
+    setOptionId: (state) => {
+      state.optionId = JSON.parse(localStorage.getItem("optionId"));
+    },
+
     filterOption: (state, payload) => {
       state.polls.map((poll) => {
         poll.optionList = poll.optionList.filter(
@@ -111,9 +116,9 @@ export default createStore({
             options: options,
           }
         );
-        const poll = res.data.rows;
-        localStorage.setItem("poll", JSON.stringify(poll));
-        commit("setPoll", poll);
+        const polls = res.data.rows;
+        localStorage.setItem("polls", JSON.stringify(polls));
+        commit("setPolls", polls);
         console.log("create poll successfully");
       } catch (error) {
         console.log(error);
@@ -126,9 +131,19 @@ export default createStore({
         const res = await axios.get(
           `https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`
         );
+        res.data.rows.forEach(poll => {
+          poll.optionList.forEach(option => {
+            if(option.id === poll.optionList.selectedId) {
+              option.disabled = true
+            }else{
+              option.disabled=false
+            }
+          })
+        });
         const polls = res.data.rows;
+        console.log(polls)
         localStorage.setItem("polls", JSON.stringify(polls));
-        console.log(res.data);
+        // console.log(res.data);
         commit("setPolls", polls);
       } catch (error) {
         console.log(error);
@@ -180,21 +195,22 @@ export default createStore({
     },
 
     //voteCount
-    async voteCount({ commit }, { optionId }) {
+    async voteCount({ state }, { optionId }) {
+      if (localStorage.getItem('optionId')) {
+        state.optionId = JSON.parse(localStorage.getItem('optionId'))
+      } else {
+        state.optionId = [optionId]
+      }
       try {
-        console.log(optionId);
-        const res = await axios.post(
-          `https://pollapi.innotechteam.in/vote/count`,
-          {
-            optionId: optionId,
-          }
-        );
-        const votes = res.data;
-        localStorage.setItem("votes", JSON.stringify(votes));
-        commit("setVote", votes);
-        console.log("vote counted successfully");
+        await axios.post(`https://pollapi.innotechteam.in/vote/count`, {
+          optionId: optionId
+        })
+        if (!state.optionId.includes(optionId)) {
+          state.optionId.push(optionId)
+        }
+        localStorage.setItem('optionId', JSON.stringify(state.optionId))
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
 

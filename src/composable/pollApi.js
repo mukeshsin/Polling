@@ -15,6 +15,8 @@ export const pollApi = () => {
   // define i
   let i = 0;
 
+  
+
   // define pollError ref
   const pollError = ref("");
 
@@ -32,6 +34,10 @@ export const pollApi = () => {
   //getPolls
 
   const polls = computed(() => {
+    return store.state.polls;
+  });
+
+  const vote = computed(() => {
     return store.state.polls;
   });
 
@@ -230,5 +236,7 @@ export const pollApi = () => {
     showPollOption,
     deletePollOption,
     pollListError,
+    vote,
+   
   };
 };

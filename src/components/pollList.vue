@@ -26,14 +26,18 @@
           type="checkbox"
           class="checkboxFix"
           value="true"
-          :disabled="option.disabled"
-          @change="countVotes(option.id, isChecked)"
-          @click="
-            option.voteCount.length += 1;
+          :disabled="option.disabled || isChecked"
+          
+          @change="
+            countVotes(option.id, isChecked);
             option.disabled = true;
+            isChecked=true
+           
           "
+          @click="option.voteCount.length += 1"
         />
-        <span>{{ option.optionTitle }} </span>
+
+        <span>{{ option.optionTitle }}</span>
         <span class="voteCss">Votes: {{ option.voteCount.length }} </span>
         <span
           @click="showPollOption(option.id, option.optionTitle)"
@@ -80,6 +84,8 @@ export default {
     } = pollApi();
 
     const isLoading = ref(true);
+    const isChecked = ref(false);
+    const checkbox = ref(null);
 
     const pollListError = computed(() => {
       if (polls.value.length === 0) {
@@ -111,8 +117,6 @@ export default {
       }
     });
 
-   
-
     return {
       polls,
       deletePoll,
@@ -127,6 +131,8 @@ export default {
       countVotes,
       pollListError,
       isLoading,
+      checkbox,
+      isChecked,
     };
   },
 };
