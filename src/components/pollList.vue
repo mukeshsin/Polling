@@ -26,12 +26,12 @@
           type="checkbox"
           class="checkboxFix"
           value="true"
-          :disabled="option.disabled || isChecked"
+          :disabled="option.disabled "
           
           @change="
             countVotes(option.id, isChecked);
             option.disabled = true;
-            isChecked=true
+          
            
           "
           @click="option.voteCount.length += 1"

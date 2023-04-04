@@ -131,20 +131,22 @@ export default createStore({
         const res = await axios.get(
           `https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`
         );
-        res.data.rows.forEach(poll => {
-          poll.optionList.forEach(option => {
-            if(option.id === poll.optionList.selectedId) {
-              option.disabled = true
-            }else{
-              option.disabled=false
-            }
-          })
-        });
+        const optionId = JSON.parse(localStorage.getItem("optionId"));
         const polls = res.data.rows;
-        console.log(polls)
+        console.log(optionId);
+        polls.forEach((poll) => {
+          poll.optionList.forEach((option) => {
+            if (optionId.includes(option.id)) {
+              option.disabled = true;
+            } else {
+              option.disabled = false;
+            }
+          });
+        });
+
+        console.log(polls);
         localStorage.setItem("polls", JSON.stringify(polls));
-        // console.log(res.data);
-        commit("setPolls", polls);
+     commit("setPolls", polls);
       } catch (error) {
         console.log(error);
       }
@@ -196,21 +198,21 @@ export default createStore({
 
     //voteCount
     async voteCount({ state }, { optionId }) {
-      if (localStorage.getItem('optionId')) {
-        state.optionId = JSON.parse(localStorage.getItem('optionId'))
+      if (localStorage.getItem("optionId")) {
+        state.optionId = JSON.parse(localStorage.getItem("optionId"));
       } else {
-        state.optionId = [optionId]
+        state.optionId = [optionId];
       }
       try {
         await axios.post(`https://pollapi.innotechteam.in/vote/count`, {
-          optionId: optionId
-        })
+          optionId: optionId,
+        });
         if (!state.optionId.includes(optionId)) {
-          state.optionId.push(optionId)
+          state.optionId.push(optionId);
         }
-        localStorage.setItem('optionId', JSON.stringify(state.optionId))
+        localStorage.setItem("optionId", JSON.stringify(state.optionId));
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
 
