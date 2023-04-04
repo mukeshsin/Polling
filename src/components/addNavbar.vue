@@ -106,4 +106,27 @@ export default {
 .router-link-exact-active {
   border-bottom: 2px solid white;
 }
+
+@media only screen and (max-width: 600px) {
+
+  .n-login {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: white;
+  margin-right: 13px;
+  bottom:2px;
+  letter-spacing: 2px;
+  font-size:15px;
+}
+
+.title {
+  font-size: 23px;
+  color: white;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+}
+
+}
 </style>

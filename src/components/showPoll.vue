@@ -19,16 +19,18 @@
         v-for="option in poll.optionList"
         :key="option.Id"
       >
-          <input
-          type="checkbox"
-          class="checkboxFix"
+         <input
+          type="radio"
+          class="radioFix"
+           name="option-group"
           value="true"
-          :disabled="option.disabled"
-          @change="countVotes(option.id, isChecked)"
-          @click="
-            option.voteCount.length += 1;
+          :disabled="option.disabled || isChecked"
+          @change="
+            countVotes(option.id, isChecked);
             option.disabled = true;
+            ischecked = true
           "
+          @click="option.voteCount.length += 1"
         />
         <span>{{ option.optionTitle }} </span>
         <span class="voteCss">Votes: {{ option.voteCount.length }} </span>
@@ -49,7 +51,7 @@ export default {
     const {
       poll,
       countVotes,
-
+     isChecked,
       viewPolls,
     } = pollApi();
     const isLoading = ref(true);
@@ -73,12 +75,11 @@ export default {
       poll,
       isLoading,
       viewPolls,
-      countVotes
+      countVotes,
+      isChecked
     };
   },
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

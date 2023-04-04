@@ -16,6 +16,7 @@ export default createStore({
     updateOptionError: null,
     optionId: [],
     vote: null,
+    
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -39,8 +40,10 @@ export default createStore({
       state.optionId = JSON.parse(localStorage.getItem("optionId"));
     },
 
-    filterOption: (state, payload) => {
-      state.polls.map((poll) => {
+    
+
+    filterOption: (state) => {
+      state.polls.map((poll, payload) => {
         poll.optionList = poll.optionList.filter(
           (option) => option.id !== payload
         );
@@ -132,25 +135,36 @@ export default createStore({
           `https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`
         );
         const optionId = JSON.parse(localStorage.getItem("optionId"));
-        const polls = res.data.rows;
         console.log(optionId);
-        polls.forEach((poll) => {
-          poll.optionList.forEach((option) => {
-            if (optionId.includes(option.id)) {
-              option.disabled = true;
-            } else {
-              option.disabled = false;
-            }
+        if (optionId) {
+          res.data.rows.forEach((poll) => {
+            poll.optionList.forEach((option) => {
+              if (optionId.includes(option.id)) {
+                option.disabled = true;
+              } else {
+                option.disabled = true;
+              }
+            });
           });
-        });
-
+        } else {
+          res.data.rows.forEach((poll) => {
+            poll.optionList.forEach((option) => {
+              if(!optionId ===option.id){
+                option.disabled = true;
+              }
+            });
+          });
+        }
+    
+        const polls = res.data.rows;
         console.log(polls);
         localStorage.setItem("polls", JSON.stringify(polls));
-     commit("setPolls", polls);
+        commit("setPolls", polls);
       } catch (error) {
         console.log(error);
       }
     },
+    
 
     // for get single Poll
     async getSinglePoll({ commit }, { pollId }) {

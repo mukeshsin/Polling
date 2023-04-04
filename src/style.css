@@ -231,6 +231,8 @@ form input {
     top: 200px;
     left: 300px;
   }
+
+
 }
 
 /* For add poll */
@@ -455,4 +457,8 @@ form input {
   margin-bottom: 10px;
   font-size: 15px;
   background-color: #f2dedf;
+}
+
+.radioFix{
+  margin-bottom:5px;
 }

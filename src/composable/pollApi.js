@@ -15,8 +15,7 @@ export const pollApi = () => {
   // define i
   let i = 0;
 
-  
-
+ 
   // define pollError ref
   const pollError = ref("");
 
@@ -237,6 +236,6 @@ export const pollApi = () => {
     deletePollOption,
     pollListError,
     vote,
-   
+
   };
 };

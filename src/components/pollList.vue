@@ -23,16 +23,16 @@
         :key="option.id"
       >
         <input
-          type="checkbox"
-          class="checkboxFix"
+          type="radio"
+          class="radioFix"
+          name="option-group"
           value="true"
-          :disabled="option.disabled "
-          
+          :disabled="option.disabled"
           @change="
             countVotes(option.id, isChecked);
             option.disabled = true;
-          
-           
+
+         
           "
           @click="option.voteCount.length += 1"
         />
@@ -85,6 +85,7 @@ export default {
 
     const isLoading = ref(true);
     const isChecked = ref(false);
+   
     const checkbox = ref(null);
 
     const pollListError = computed(() => {
@@ -133,6 +134,7 @@ export default {
       isLoading,
       checkbox,
       isChecked,
+     
     };
   },
 };
