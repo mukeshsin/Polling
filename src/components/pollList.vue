@@ -26,14 +26,10 @@
           type="radio"
           class="radioFix"
           name="option-group"
-          value="true"
-          :disabled="option.disabled"
-          @change="
-            countVotes(option.id, isChecked);
-            option.disabled = true;
-
-         
-          "
+          :value="true"
+          v-model="option.isChecked"
+          :disabled="poll.disabled"
+          @change="countVotes(option.id)"
           @click="option.voteCount.length += 1"
         />
 
@@ -60,7 +56,6 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
 import { onMounted, computed, ref } from "vue";
 import { pollApi } from "../composable/pollApi";
 
@@ -68,7 +63,6 @@ export default {
   name: "pollList",
 
   setup() {
-    const store = useStore();
     const {
       polls,
       deletePoll,
@@ -81,12 +75,12 @@ export default {
       showUpdatePoll,
       showAddBtnCondition,
       countVotes,
+      getPollData,
+      isLoading,
     } = pollApi();
 
-    const isLoading = ref(true);
-    const isChecked = ref(false);
-   
-    const checkbox = ref(null);
+    const isChecked = ref("false");
+    const radio = ref("false");
 
     const pollListError = computed(() => {
       if (polls.value.length === 0) {
@@ -99,16 +93,7 @@ export default {
     onMounted(async () => {
       console.log("Getting poll list...");
 
-      try {
-        await store.dispatch("getAllPoll", {
-          page: store.state.page,
-          limit: store.state.limit,
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        isLoading.value = false;
-      }
+      getPollData();
     });
 
     onMounted(() => {
@@ -132,9 +117,8 @@ export default {
       countVotes,
       pollListError,
       isLoading,
-      checkbox,
       isChecked,
-     
+      radio,
     };
   },
 };

@@ -15,8 +15,6 @@ export default createStore({
     titleUpdateError: null,
     updateOptionError: null,
     optionId: [],
-    vote: null,
-    
   },
   mutations: {
     setRoles: (state, payload) => {
@@ -28,19 +26,13 @@ export default createStore({
     setPoll: (state) => {
       state.poll = JSON.parse(localStorage.getItem("poll"));
     },
-    setPolls: (state) => {
-      state.polls = JSON.parse(localStorage.getItem("polls"));
-    },
-
-    setVote: (state) => {
-      state.vote = JSON.parse(localStorage.getItem("vote"));
+    setPolls: (state, payload) => {
+      state.polls = payload;
     },
 
     setOptionId: (state) => {
       state.optionId = JSON.parse(localStorage.getItem("optionId"));
     },
-
-    
 
     filterOption: (state) => {
       state.polls.map((poll, payload) => {
@@ -135,36 +127,21 @@ export default createStore({
           `https://pollapi.innotechteam.in/poll/list/${page}?limit=${limit}`
         );
         const optionId = JSON.parse(localStorage.getItem("optionId"));
-        console.log(optionId);
-        if (optionId) {
-          res.data.rows.forEach((poll) => {
-            poll.optionList.forEach((option) => {
-              if (optionId.includes(option.id)) {
-                option.disabled = true;
-              } else {
-                option.disabled = true;
-              }
-            });
-          });
-        } else {
-          res.data.rows.forEach((poll) => {
-            poll.optionList.forEach((option) => {
-              if(!optionId ===option.id){
-                option.disabled = true;
-              }
-            });
-          });
-        }
-    
         const polls = res.data.rows;
-        console.log(polls);
-        localStorage.setItem("polls", JSON.stringify(polls));
-        commit("setPolls", polls);
+        polls.forEach((poll) => {
+          poll.optionList.forEach((option) => {
+            if (optionId && optionId.includes(option.id)) {
+              poll.disabled = true;
+              option.isChecked = true;
+            }
+          });
+        });
+        console.log("polls", polls);
+        commit("setPolls", [...polls]);
       } catch (error) {
         console.log(error);
       }
     },
-    
 
     // for get single Poll
     async getSinglePoll({ commit }, { pollId }) {
@@ -217,14 +194,24 @@ export default createStore({
       } else {
         state.optionId = [optionId];
       }
+
       try {
-        await axios.post(`https://pollapi.innotechteam.in/vote/count`, {
-          optionId: optionId,
-        });
+        const result = await axios.post(
+          `https://pollapi.innotechteam.in/vote/count`,
+          {
+            optionId: optionId,
+          }
+        );
+        if (!Array.isArray(state.optionId)) {
+          state.optionId = [];
+        }
+
         if (!state.optionId.includes(optionId)) {
           state.optionId.push(optionId);
         }
+
         localStorage.setItem("optionId", JSON.stringify(state.optionId));
+        return result;
       } catch (error) {
         console.log(error);
       }

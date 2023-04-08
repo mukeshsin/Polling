@@ -5,6 +5,20 @@ import { useRouter } from "vue-router";
 export const pollApi = () => {
   const store = useStore();
   const router = useRouter();
+  const isLoading = ref(true);
+
+  const getPollData = async () => {
+    try {
+      await store.dispatch("getAllPoll", {
+        page: store.state.page,
+        limit: store.state.limit,
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
   //For newpoll
   const newPoll = reactive({
@@ -15,7 +29,6 @@ export const pollApi = () => {
   // define i
   let i = 0;
 
- 
   // define pollError ref
   const pollError = ref("");
 
@@ -167,9 +180,14 @@ export const pollApi = () => {
   const countVotes = async (optionId) => {
     try {
       console.log(optionId);
-      await store.dispatch("voteCount", {
+      const result = await store.dispatch("voteCount", {
         optionId,
       });
+      if (result && result.status === 200) {
+        getPollData();
+       
+      }
+      console.log("result", result);
     } catch (error) {
       console.log(error);
     }
@@ -236,6 +254,7 @@ export const pollApi = () => {
     deletePollOption,
     pollListError,
     vote,
-
+    getPollData,
+    isLoading,
   };
 };
