@@ -1,22 +1,19 @@
 <template>
-<div class="toastWrap">
+  <div class="toastWrap">
     <div class="toastContent">
-        <slot name="content"></slot>
+      <slot name="content"></slot>
     </div>
-
-</div>
+  </div>
 </template>
 
 <script>
-import {
-    fetchApi
-} from "../composable/loginApi.js";
+import { fetchApi } from "../composable/loginApi.js";
 export default {
-    name: "successToast",
-    setup() {
-        return {
-            ...fetchApi()
-        };
-    },
+  name: "successToast",
+  setup() {
+    return {
+      ...fetchApi(),
+    };
+  },
 };
 </script>

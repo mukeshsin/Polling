@@ -1,3 +1,7 @@
+/* For Signup and login */
+body {
+  height: 300px;
+}
 * {
   box-sizing: border-box;
 }
@@ -5,17 +9,17 @@
   width: 360px;
   height: 100%;
   margin: auto;
-  border: 2px solid grey;
-  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+  border: 6px solid grey;
   border-radius: 3px;
+  margin-top: 3%;
 }
 .login-box {
   width: 360px;
   height: 100%;
   margin: auto;
   border-radius: 3px;
-  border: 2px solid grey;
-  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+  border: 6px solid grey;
+  margin-top: 5%;
 }
 .head {
   text-align: center;
@@ -70,6 +74,19 @@ form input {
 .checkboxlabel {
   margin-bottom: 8px;
 }
+
+.errors {
+  margin-left: 9px;
+  color: crimson;
+  display: flex;
+  margin-top: 5px;
+  font-size: 17px;
+}
+
+.loaderCss {
+  font-size: 15px;
+}
+
 .submitBtn {
   width: 300px;
   height: 35px;
@@ -91,13 +108,7 @@ form input {
   font-size: 18px;
   margin-bottom: 20px;
 }
-.errors {
-  margin-left: 9px;
-  color: crimson;
-  display: flex;
-  margin-top: 5px;
-  font-size: 17px;
-}
+
 .toastWrap {
   background-image: linear-gradient(to right, crimson, grey);
   width: 24%;
@@ -129,6 +140,7 @@ form input {
     margin-right: 10px;
     width: 300px;
     height: 650px;
+    margin-top: 3%;
   }
 
   .login-box {
@@ -136,8 +148,8 @@ form input {
     height: 360px;
     margin: auto;
     border-radius: 3px;
-    border: 2px solid grey;
-    box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.4);
+    border: 6px solid grey;
+    margin-top: 5%;
   }
 
   .headPara {
@@ -219,7 +231,234 @@ form input {
     top: 200px;
     left: 300px;
   }
+
+
 }
-/* For tablet views */
-@media only screen and (min-width: 601px) and (max-width: 1024px) {
+
+/* For add poll */
+.pollHead {
+  font-size: 28px;
+  font-weight: bold;
+}
+.poll-para {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 11%;
+}
+.pollLabel {
+  display: flex;
+  margin-top: 12px;
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+.inputWrap {
+  position: relative;
+}
+.inputWrap i {
+  font-size: 20px;
+  display: flex;
+  margin-left: 92%;
+  margin-bottom: 30px;
+  position: absolute;
+  top: 7px;
+}
+.editPollIcon {
+  padding: 10px;
+  font-size: 22px;
+  color: black;
+  font-weight: bold;
+}
+.deletePollIcon {
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+}
+
+.pollBtn {
+  width: 120px;
+  height: 35px;
+  margin-top: 20px;
+  border: none;
+  background-color: #49c1a2;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+.cancelBtn {
+  background-color: #49c1a2;
+  width: 100px;
+  color: white;
+  font-size: 16px;
+  border: none;
+  height: 35px;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+
+/* For polllist */
+
+.formContainer {
+  margin-top: 100px;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  border: 6px solid grey;
+  position: relative;
+  border-radius: 3px;
+}
+
+.poll-head {
+  font-size: 27px;
+}
+
+.poll {
+  padding: 10px;
+  border-top: 1px dotted black;
+  margin-top: 27px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.mainDiv {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 380px;
+}
+.mainDiv h3 {
+  color: #49c1a2;
+  font-size: 25px;
+  margin-right: 12%;
+}
+
+.Icons {
+  color: #bec2c4;
+  font-size: 19px;
+}
+
+.Icons span {
+  margin-bottom: 20%;
+  font-weight: bold;
+  margin-right: 7px;
+  cursor: pointer;
+}
+.Icons span:hover {
+  color: #333;
+}
+
+.pollOptions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+.pollOptions input[type="checkbox"] {
+  margin-right: 12px;
+}
+
+.pollOptions span {
+  margin: 0;
+  font-size: 16px;
+  margin-right: 7px;
+}
+
+.pollOptions .optIcon {
+  cursor: pointer;
+  color: #999;
+  margin-right: 8px;
+}
+
+.pollOptions .optIcon:hover {
+  color: #333;
+}
+
+.pollOptions .optIcon i {
+  margin-right: 5px;
+}
+
+.addPoll {
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  color: white;
+  background-color: blue;
+  border: none;
+  width: 7%;
+  padding: 10px;
+  font-size: 17px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.emptyError {
+  font-size: 18px;
+  color: crimson;
+  font-weight: bold;
+}
+
+.iconClass {
+  font-size: 15px;
+}
+
+/*showPoll*/
+
+.arrow-left {
+  font-size: 20px;
+}
+
+.mainDiv h2 {
+  margin-right: 35%;
+  color: #49c1a2;
+  font-size: 25px;
+}
+.Icon {
+  position: absolute;
+  display: flex;
+  left: 10%;
+  color: #bec2c4;
+  font-size: 19px;
+}
+.Icon span {
+  margin-bottom: 20%;
+  font-weight: bold;
+  margin-right: 7px;
+  cursor: pointer;
+}
+.Icon span:hover {
+  color: #333;
+}
+
+.iconClass {
+  font-size: 15px;
+}
+.voteCss {
+  margin-left: 10px;
+  border-bottom: 2px solid black;
+}
+
+/*updatePoll and options*/
+.pollLabels {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.pollInputs {
+  margin-top: 20px;
+  display: flex;
+  margin-left: 43%;
+  font-size: 18px;
+}
+.addError {
+  color: red;
+  border: none;
+  margin-bottom: 10px;
+  font-size: 15px;
+  background-color: #f2dedf;
+}
+
+.radioFix{
+  margin-bottom:5px;
 }
